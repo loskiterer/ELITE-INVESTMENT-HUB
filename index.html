@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELITE HUB | Global AI Trading</title>
+    <title>ELITE HUB | World-Class AI Trading</title>
     <script src="https://s3.tradingview.com/tv.js"></script>
     <style>
         :root {
@@ -11,14 +11,16 @@
             --text-gray: #94a3b8; --danger: #ef4444; --gold: #ffb700; --demo: #3b82f6;
         }
 
-        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg-dark); color: white; scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg-dark); color: white; scroll-behavior: smooth; overflow-x: hidden; }
         .card { background: var(--card-bg); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 25px; margin-bottom: 20px; border-radius: 15px; }
         header { background: rgba(11, 15, 26, 0.95); padding: 15px; text-align: center; border-bottom: 1px solid var(--primary); position: sticky; top: 0; z-index: 1000; }
         .container { padding: 20px; max-width: 1300px; margin: auto; }
         
         button { padding: 14px; border: none; border-radius: 8px; background: var(--primary); color: white; font-weight: bold; width: 100%; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:hover { opacity: 0.8; transform: translateY(-2px); }
         .btn-demo { background: var(--demo); }
         .btn-alt { background: transparent; border: 1px solid var(--primary); color: white; }
+        .btn-danger { background: var(--danger); }
 
         input, select { width: 100%; padding: 14px; margin: 10px 0; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: white; box-sizing: border-box; }
         
@@ -29,7 +31,12 @@
         .live-dot { height: 10px; width: 10px; background: var(--primary); border-radius: 50%; display: inline-block; margin-right: 8px; animation: pulse 1s infinite; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
         
-        #market-log { font-family: monospace; font-size: 11px; height: 100px; overflow-y: hidden; color: #4ade80; background: #000; padding: 10px; border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
+        
+        .chat-area { height: 150px; overflow-y: auto; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 10px; margin-bottom: 10px; font-size: 12px; }
+        .msg-u { color: var(--primary); margin-bottom: 5px; }
+        .msg-a { color: var(--gold); margin-bottom: 10px; padding-left: 10px; border-left: 1px solid var(--gold); }
     </style>
 </head>
 <body>
@@ -41,20 +48,21 @@
 <div class="container">
 
     <div id="home">
-        <div class="card" style="text-align: center; padding: 40px 20px;">
-            <h1>Global Multi-Currency Trading</h1>
-            <p style="color: var(--text-gray);">Supporting 50+ African nations and International Markets.</p>
+        <div class="card" style="text-align: center; padding: 50px 20px;">
+            <h1>Global AI Wealth Solutions</h1>
+            <p style="color: var(--text-gray);">Visual Market Waves & Institutional Execution for Everyone.</p>
             <div style="max-width: 500px; margin: auto; display: flex; gap: 10px;">
-                <button onclick="showPage('register')">Get Started</button>
+                <button onclick="showPage('register')">Join Hub</button>
                 <button onclick="showPage('login')" class="btn-alt">Login</button>
             </div>
         </div>
-        <div class="card" id="tv_home" style="height: 350px; padding: 0;"></div>
+        <div class="card" id="tv_home" style="height: 380px; padding: 0; overflow: hidden;"></div>
+        <center><p onclick="showPage('adminLogin')" style="cursor:pointer; color:#475569; font-size: 10px; margin-top: 40px;">Staff Gateway</p></center>
     </div>
 
     <div id="register" class="hidden">
         <div class="card" style="max-width: 450px; margin: auto;">
-            <h2>Register Account</h2>
+            <h2>Create Account</h2>
             <input id="regName" placeholder="Full Name">
             <input id="regPhone" placeholder="Phone Number">
             <select id="regCountry" onchange="updateCurView()">
@@ -63,98 +71,163 @@
                     <option value="Nigeria" data-cur="NGN" data-rate="12.5">Nigeria (NGN)</option>
                     <option value="South Africa" data-cur="ZAR" data-rate="0.14">South Africa (ZAR)</option>
                     <option value="Ghana" data-cur="GHS" data-rate="0.11">Ghana (GHS)</option>
-                    <option value="Uganda" data-cur="UGX" data-rate="28.5">Uganda (UGX)</option>
-                    <option value="Tanzania" data-cur="TZS" data-rate="19.2">Tanzania (TZS)</option>
-                    <option value="Rwanda" data-cur="RWF" data-rate="9.8">Rwanda (RWF)</option>
-                    <option value="Egypt" data-cur="EGP" data-rate="0.37">Egypt (EGP)</option>
                 </optgroup>
                 <optgroup label="International">
                     <option value="USA" data-cur="USD" data-rate="0.0076">United States (USD)</option>
-                    <option value="UK" data-cur="GBP" data-rate="0.0060">United Kingdom (GBP)</option>
-                    <option value="Europe" data-cur="EUR" data-rate="0.0070">Europe (EUR)</option>
+                    <option value="UK" data-cur="GBP" data-rate="0.006">United Kingdom (GBP)</option>
                     <option value="UAE" data-cur="AED" data-rate="0.028">UAE (AED)</option>
                 </optgroup>
             </select>
             <input id="regPass" type="password" placeholder="Password">
-            <button onclick="handleRegister()">Proceed</button>
+            <button onclick="handleRegister()">Select Trading Plan</button>
+        </div>
+    </div>
+
+    <div id="plans" class="hidden">
+        <h2 style="text-align:center;">Trading Tiers</h2>
+        <div class="grid-dashboard" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+            <div class="card" style="text-align:center;"><h3>BASIC</h3><h2 id="p1V"></h2><button onclick="setPlan('Basic', 2000, 0.05)">5% / Min</button></div>
+            <div class="card" style="text-align:center; border: 1px solid var(--gold);"><h3>GOLD</h3><h2 id="p3V"></h2><button onclick="setPlan('Gold', 10000, 0.15)">15% / Min</button></div>
+        </div>
+    </div>
+
+    <div id="payPage" class="hidden">
+        <div class="card" style="max-width: 500px; margin: auto; text-align: center;">
+            <h2>Activate Account</h2>
+            <p>Send <b id="payAmtText"></b> to complete activation.</p>
+            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; margin: 15px 0;">
+                <p><b>M-Pesa:</b> +254 785 449 376</p>
+                <p><b>Crypto:</b> TXEliteUSDT785TRC20...</p>
+            </div>
+            <input id="depRef" placeholder="Transaction Code or Hash">
+            <button onclick="finishReg()">Submit for Verification</button>
+        </div>
+    </div>
+
+    <div id="login" class="hidden">
+        <div class="card" style="max-width: 450px; margin: auto;">
+            <h2>Secure Login</h2>
+            <input id="lPhone" placeholder="Phone Number">
+            <input id="lPass" type="password" placeholder="Password">
+            <button onclick="handleLogin()">Enter Dashboard</button>
         </div>
     </div>
 
     <div id="dashboard" class="hidden">
-        <div class="card" id="dashHeader" style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <div class="live-dot"></div> <small>AI TRADING ACTIVE</small>
-                <h3 id="dName">User</h3>
-                <div id="badge-area"></div>
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <button id="demoBtn" onclick="toggleDemo()" class="btn-demo" style="width:auto; padding: 10px;">Demo Mode</button>
-                <button onclick="showPage('profilePage')" class="btn-alt" style="width:auto; padding: 10px;">Profile</button>
+        <div class="card" id="dashHeader" style="display: flex; justify-content: space-between; align-items: center; border-left: 5px solid var(--primary);">
+            <div><div class="live-dot"></div> <small id="engineTag">LIVE ENGINE</small><h3 id="dName" style="margin:5px 0;">User</h3></div>
+            <div style="display: flex; gap: 8px;">
+                <button id="demoBtn" onclick="toggleDemo()" class="btn-demo" style="width:auto; padding: 10px;">Try Demo</button>
+                <button onclick="showPage('profilePage')" class="btn-alt" style="width:auto; padding: 10px;">Settings</button>
             </div>
         </div>
 
         <div class="grid-dashboard">
             <div>
-                <div class="card" style="height: 350px; padding: 0; overflow: hidden;"><div id="tv_dash" style="height: 100%;"></div></div>
+                <div class="card" style="height: 350px; padding:0; overflow:hidden;"><div id="tv_dash" style="height:100%;"></div></div>
                 <div class="card">
-                    <h4>Market Logs</h4>
-                    <div id="market-log"></div>
+                    <h4>Market Execution Stream</h4>
+                    <div id="market-log" style="font-family:monospace; font-size:11px; color:var(--primary); height: 80px; overflow:hidden;"></div>
                 </div>
             </div>
             <div>
-                <div class="card" style="border: 1px solid var(--primary);">
-                    <small>Total Net Equity</small>
-                    <h1 id="dTotal" style="color: var(--primary); margin: 5px 0;">0.00</h1>
-                    <p>Investment: <span id="dInv">0.00</span></p>
-                    <p>Profit: <span id="dProf" style="color:var(--gold);">0.00</span></p>
+                <div class="card" style="background: #111827; border: 1px solid #374151;">
+                    <small>Total Account Balance (Equity)</small>
+                    <h1 id="dTotal" style="color:var(--primary); margin: 5px 0;">0.00</h1>
+                    <p style="font-size:13px; opacity:0.7;">Investment: <span id="dInv"></span></p>
+                    <p style="font-size:13px; color:var(--gold);">Live Profit: <span id="dProf"></span></p>
                 </div>
-                <button onclick="showPage('withdrawPage')" style="background:var(--danger); width: 100%;">Withdraw Funds</button>
-                <button onclick="logout()" class="btn-alt" style="margin-top: 15px; width: 100%;">Logout</button>
+                <button onclick="showPage('withdrawPage')" class="btn-danger">Withdraw Profits</button>
+                <div class="card" style="margin-top:20px;">
+                    <h4>Support</h4>
+                    <div id="chatBox" class="chat-area"></div>
+                    <input id="chatInput" placeholder="Ask Admin...">
+                    <button onclick="sendMessage()" class="btn-alt">Send</button>
+                </div>
             </div>
+        </div>
+        <button onclick="logout()" class="btn-alt" style="width:auto; float:right;">Logout</button>
+    </div>
+
+    <div id="profilePage" class="hidden">
+        <div class="card" style="max-width: 500px; margin: auto;">
+            <h2>Edit Profile</h2>
+            <label>Full Name</label><input id="editName">
+            <label>Login Phone</label><input id="editPhone">
+            <label>New Password</label><input id="editPass" type="password">
+            <button onclick="saveProfile()">Update Credentials</button>
+            <button onclick="showPage('dashboard')" class="btn-alt">Back</button>
         </div>
     </div>
 
-    <div id="plans" class="hidden"><div class="container"><h2>Plans</h2><div class="grid-dashboard" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));"><div class="card"><h3>BASIC</h3><h2 id="p1V"></h2><button onclick="setPlan('Basic', 2000, 0.05)">Select</button></div><div class="card"><h3>GOLD</h3><h2 id="p3V"></h2><button onclick="setPlan('Gold', 10000, 0.15)">Select</button></div></div></div></div>
-    <div id="login" class="hidden"><div class="card" style="max-width: 450px; margin: auto;"><h2>Login</h2><input id="lPhone" placeholder="Phone"><input id="lPass" type="password"><button onclick="handleLogin()">Login</button></div></div>
-    <div id="profilePage" class="hidden"><div class="card" style="max-width: 500px; margin: auto;"><h2>Settings</h2><input id="editName"><input id="editPhone"><input id="editPass" type="password"><button onclick="saveProfile()">Update</button><button onclick="showPage('dashboard')" class="btn-alt">Back</button></div></div>
-    <div id="withdrawPage" class="hidden"><div class="card" style="max-width: 450px; margin: auto;"><h2>Withdraw</h2><input id="wAmt" placeholder="Amount"><button onclick="requestWithdraw()">Request</button></div></div>
+    <div id="withdrawPage" class="hidden">
+        <div class="card" style="max-width: 450px; margin: auto;">
+            <h2>Withdraw</h2>
+            <input id="wAmt" placeholder="Amount">
+            <button onclick="requestWithdraw()">Request Payout</button>
+            <button onclick="showPage('dashboard')" class="btn-alt">Cancel</button>
+        </div>
+    </div>
+
+    <div id="adminLogin" class="hidden">
+        <div class="card" style="max-width: 400px; margin: auto;"><input id="aPass" type="password" placeholder="Admin Password"><button onclick="if(aPass.value==='elite123'){showPage('adminPanel');renderAdmin();}">Login Admin</button></div>
+    </div>
+    <div id="adminPanel" class="hidden">
+        <div class="card">
+            <h2>Global User Ledger</h2>
+            <div style="overflow-x:auto;"><table><thead><tr><th>Name</th><th>Phone</th><th>Country</th><th>Ref</th><th>Status</th><th>Action</th></tr></thead><tbody id="ledger"></tbody></table></div>
+        </div>
+        <div class="card"><h2>Support Inquiries</h2><div id="adminInquiries"></div></div>
+        <button onclick="showPage('home')" class="btn-alt">Exit Admin</button>
+    </div>
 
 </div>
 
 <script>
-    let users = JSON.parse(localStorage.getItem("Elite_Global_V15")) || [];
+    let users = JSON.parse(localStorage.getItem("Elite_V17_Data")) || [];
+    let msgs = JSON.parse(localStorage.getItem("Elite_V17_Msgs")) || [];
     let cur = null;
     let isDemo = false;
-    let demoAcc = { balance: 50000, profit: 0 };
+    let demoData = { balance: 50000, profit: 0 };
 
-    function save() { localStorage.setItem("Elite_Global_V15", JSON.stringify(users)); }
+    function save() { 
+        localStorage.setItem("Elite_V17_Data", JSON.stringify(users)); 
+        localStorage.setItem("Elite_V17_Msgs", JSON.stringify(msgs));
+    }
 
-    // ENGINES
+    // --- ENGINES ---
     setInterval(() => {
         users.forEach(u => { if(u.status === 'Active') u.profit += (u.base * u.growth); });
         save(); if(cur && !isDemo) refreshUI();
     }, 60000);
 
     setInterval(() => {
-        if(cur && isDemo) { demoAcc.profit += (demoAcc.balance * 0.02); refreshUI(); }
-    }, 8000);
+        if(isDemo && cur) { demoData.profit += (demoData.balance * 0.02); refreshUI(); }
+        if(cur) {
+            const log = document.getElementById('market-log');
+            const entry = `<div>> [${new Date().toLocaleTimeString()}] AI_TRADE_EXECUTION: EUR/USD +$${(Math.random()*10).toFixed(2)} [SUCCESS]</div>`;
+            log.innerHTML = entry + log.innerHTML;
+        }
+    }, 10000);
 
+    // --- CORE LOGIC ---
     function refreshUI() {
         let u = users.find(x => x.phone === cur.phone);
-        let src = isDemo ? demoAcc : u;
-        let baseVal = isDemo ? demoAcc.balance : u.balance;
+        let src = isDemo ? demoData : u;
+        let baseVal = isDemo ? demoAcc.balance : u.balance; // Using u.balance to represent active principal
+        let total = (isDemo ? (demoData.balance + demoData.profit) : (u.balance + u.profit)) * u.rate;
         
-        let total = (baseVal + src.profit) * u.rate;
-        dTotal.innerText = `${u.currency} ${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-        dInv.innerText = `${u.currency} ${(baseVal * u.rate).toLocaleString()}`;
+        dTotal.innerText = `${u.currency} ${total.toLocaleString()}`;
+        dInv.innerText = `${u.currency} ${( (isDemo?50000:u.balance) * u.rate).toLocaleString()}`;
         dProf.innerText = `${u.currency} ${(src.profit * u.rate).toLocaleString()}`;
     }
 
     function toggleDemo() {
         isDemo = !isDemo;
-        demoAcc.profit = 0;
-        badge_area.innerHTML = isDemo ? '<span style="color:var(--demo)">[DEMO MODE]</span>' : '';
-        demoBtn.innerText = isDemo ? "Exit Demo" : "Demo Mode";
+        demoData.profit = 0;
+        dashHeader.style.borderColor = isDemo ? "var(--demo)" : "var(--primary)";
+        engineTag.innerText = isDemo ? "SIMULATED ENGINE" : "LIVE ENGINE";
+        demoBtn.innerText = isDemo ? "Exit Demo" : "Try Demo";
         refreshUI();
     }
 
@@ -167,46 +240,67 @@
 
     function handleRegister() {
         const s = regCountry.options[regCountry.selectedIndex];
-        cur = { name: regName.value, phone: regPhone.value, pass: regPass.value, currency: s.dataset.cur, rate: parseFloat(s.dataset.rate), profit: 0, balance: 0, status: "Waiting" };
+        cur = { name: regName.value, phone: regPhone.value, pass: regPass.value, country: s.value, currency: s.dataset.cur, rate: parseFloat(s.dataset.rate), profit: 0, balance: 0, status: "Waiting" };
         showPage('plans');
     }
 
     function setPlan(p, b, g) {
-        cur.plan = p; cur.base = b; cur.growth = g; cur.status = "Active"; // Auto-active for this demo build
-        users.push(cur); cur.balance = b; save();
-        showPage('login');
+        cur.plan = p; cur.base = b; cur.growth = g;
+        payAmtText.innerText = `${cur.currency} ${(b * cur.rate).toLocaleString()}`;
+        showPage('payPage');
+    }
+
+    function finishReg() {
+        cur.depRef = depRef.value; cur.status = "Pending";
+        users.push(cur); save(); alert("Submitted for approval!"); showPage('login');
     }
 
     function handleLogin() {
         let u = users.find(x => x.phone == lPhone.value && x.pass == lPass.value);
-        if(u) { cur = u; showPage('dashboard'); dName.innerText = u.name; refreshUI(); }
+        if(u) { cur = u; showPage('dashboard'); dName.innerText = u.name; refreshUI(); renderChat(); }
+        else alert("Invalid credentials.");
     }
 
     function saveProfile() {
         let idx = users.findIndex(x => x.phone === cur.phone);
         users[idx].name = editName.value; users[idx].phone = editPhone.value; users[idx].pass = editPass.value;
-        cur = users[idx]; save(); alert("Updated!"); showPage('dashboard');
+        cur = users[idx]; save(); alert("Profile Updated!"); showPage('dashboard');
     }
 
     function requestWithdraw() {
         let amt = parseFloat(wAmt.value);
-        if(amt > cur.profit * cur.rate) return alert("Low balance");
-        cur.profit -= (amt / cur.rate); save(); refreshUI(); alert("Success");
+        if(amt > cur.profit * cur.rate) return alert("Insufficient profit.");
+        cur.profit -= (amt / cur.rate); save(); refreshUI(); alert("Requested.");
     }
 
-    function initWaves(id) { new TradingView.widget({"autosize": true, "symbol": "FX:EURUSD", "interval": "1", "theme": "dark", "style": "3", "container_id": id, "hide_top_toolbar": true}); }
+    // --- CHAT & ADMIN ---
+    function sendMessage() {
+        msgs.push({ sender: cur.phone, name: cur.name, text: chatInput.value, reply: null });
+        save(); chatInput.value = ""; renderChat();
+    }
+
+    function renderChat() {
+        let my = msgs.filter(m => m.sender === cur.phone);
+        chatBox.innerHTML = my.map(m => `<div class="msg-u"><b>Me:</b> ${m.text}</div>${m.reply ? `<div class="msg-a"><b>Admin:</b> ${m.reply}</div>` : ''}`).join('');
+    }
+
+    function renderAdmin() {
+        ledger.innerHTML = users.map((u, i) => `<tr><td>${u.name}</td><td>${u.phone}</td><td>${u.country}</td><td>${u.depRef}</td><td>${u.status}</td><td>${u.status==='Pending'?`<button onclick="approve(${i})">Approve</button>`:'OK'}</td></tr>`).join('');
+        adminInquiries.innerHTML = msgs.map((m, i) => `
+            <div class="card"><small>${m.name} (${m.sender})</small><p>${m.text}</p>
+            <input id="admR${i}" placeholder="Reply..."><button onclick="adminReply(${i})">Send</button></div>
+        `).join('');
+    }
+
+    function approve(i) { users[i].status = "Active"; users[i].balance = users[i].base; save(); renderAdmin(); }
+    function adminReply(i) { msgs[i].reply = document.getElementById('admR'+i).value; save(); renderAdmin(); }
+
+    function initWaves(id) { new TradingView.widget({"autosize": true, "symbol": "FX:EURUSD", "theme": "dark", "container_id": id, "hide_top_toolbar": true}); }
+    function logout() { cur = null; isDemo = false; showPage('home'); }
+    function updateCurView() { const s = regCountry.options[regCountry.selectedIndex]; const r = s.dataset.rate; const c = s.dataset.cur; p1V.innerText = `${c} ${(2000*r).toLocaleString()}`; p3V.innerText = `${c} ${(10000*r).toLocaleString()}`; }
     
-    function updateCurView() {
-        const s = regCountry.options[regCountry.selectedIndex];
-        const r = s.dataset.rate; const c = s.dataset.cur;
-        p1V.innerText = `${c} ${(2000*r).toLocaleString()}`;
-        p3V.innerText = `${c} ${(10000*r).toLocaleString()}`;
-    }
-
-    function logout() { cur=null; isDemo=false; showPage('home'); }
     window.onload = () => { initWaves('tv_home'); updateCurView(); };
 </script>
-
 </body>
 </html>
 
