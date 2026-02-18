@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELITE HUB | Global African Investment</title>
+    <title>ELITE HUB | Global AI Trading Platform</title>
     <style>
         :root {
             --primary: #22c55e;
@@ -12,11 +12,12 @@
             --text-gray: #94a3b8;
             --danger: #ef4444;
             --gold: #ffb700;
+            --silver: #cbd5e1;
             --mpesa: #49aa29;
         }
 
         body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg-dark); color: white; scroll-behavior: smooth; }
-        .card { background: var(--card-bg); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 25px; margin-bottom: 20px; border-radius: 15px; transition: 0.3s; }
+        .card { background: var(--card-bg); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 25px; margin-bottom: 20px; border-radius: 15px; transition: 0.3s; }
         header { background: rgba(11, 15, 26, 0.95); padding: 15px; text-align: center; border-bottom: 1px solid var(--primary); position: sticky; top: 0; z-index: 1000; }
         .container { padding: 20px; max-width: 1200px; margin: auto; }
         
@@ -30,11 +31,16 @@
         .status-active { color: var(--primary); font-weight: bold; }
         .status-pending { color: var(--gold); font-weight: bold; }
 
+        /* Live Animation */
+        .live-indicator { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--primary); margin-bottom: 10px; }
+        .dot { height: 8px; width: 8px; background: var(--primary); border-radius: 50%; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+
         table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; }
         th, td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: left; }
         th { color: var(--primary); }
 
-        .mpesa-notice { background: #f0fdf4; color: #166534; padding: 20px; border-radius: 12px; border-left: 6px solid var(--mpesa); }
+        .mpesa-box { background: #f0fdf4; color: #166534; padding: 20px; border-radius: 12px; border-left: 6px solid var(--mpesa); }
         footer { background: #05070a; padding: 40px; text-align: center; border-top: 1px solid #1e293b; margin-top: 60px; color: var(--text-gray); }
     </style>
 </head>
@@ -48,74 +54,70 @@
 
     <div id="home">
         <div class="card" style="text-align: center; padding: 60px 20px;">
-            <h1 style="font-size: 2.5rem;">The Premier African Investment Portal</h1>
-            <p style="color: var(--text-gray);">Automated ROI tailored for every African currency.</p>
+            <h1>Global AI-Powered Trading</h1>
+            <p style="color: var(--text-gray);">Minute-by-minute profit generation for the African continent.</p>
             <div style="max-width: 500px; margin: auto; display: flex; gap: 10px;">
-                <button onclick="showPage('register')">Register Now</button>
+                <button onclick="showPage('register')">Register</button>
                 <button onclick="showPage('login')" style="background:transparent; border: 1px solid var(--primary);">Login</button>
             </div>
         </div>
 
-        <h2 style="text-align:center; color:var(--primary);">How It Works</h2>
         <div class="grid-3">
-            <div class="card"><h3>1. Sign Up</h3><p>Choose your country and create your account instantly.</p></div>
-            <div class="card"><h3>2. Activate</h3><p>Pay via M-Pesa or Crypto. Admin approves your plan.</p></div>
-            <div class="card"><h3>3. Earn</h3><p>Receive daily profits directly to your dashboard.</p></div>
+            <div class="card"><h3>How It Works</h3><p>Register, choose your country, pay via M-Pesa or USDT, and watch your profits grow every 60 seconds.</p></div>
+            <div class="card"><h3>Why Choose Us?</h3><p>Secure, automated, and multi-currency support with 24/7 admin assistance.</p></div>
+            <div class="card"><h3>About Us</h3><p>Elite Hub is a leading fintech firm bringing institutional trading tools to everyday investors.</p></div>
         </div>
-
-        <div class="card" style="margin-top: 40px; text-align: center;">
-            <h2 style="color:var(--primary);">About Us</h2>
-            <p>Elite Hub is a pan-African fintech company specializing in algorithmic trading. Our mission is to democratize institutional wealth tools for everyone from Nairobi to Lagos.</p>
-        </div>
-        <center><p onclick="showPage('adminLogin')" style="cursor:pointer; color:#475569; font-size: 10px; margin-top: 20px;">Staff Authentication</p></center>
+        <center><p onclick="showPage('adminLogin')" style="cursor:pointer; color:#475569; font-size: 10px; margin-top: 40px;">Staff Portal</p></center>
     </div>
 
     <div id="register" class="hidden">
         <div class="card" style="max-width: 450px; margin: auto;">
-            <h2>Register Account</h2>
+            <h2>Register</h2>
             <input id="regName" placeholder="Full Name">
-            <input id="regPhone" placeholder="Mobile Number (e.g. 07...)">
-            <select id="regCountry" onchange="updatePlanView()">
+            <input id="regPhone" placeholder="Mobile Number">
+            <select id="regCountry" onchange="updateCurrencyView()">
                 <option value="Kenya" data-cur="KES" data-rate="1">Kenya (KES)</option>
-                <option value="Nigeria" data-cur="NGN" data-rate="12.5">Nigeria (NGN)</option>
-                <option value="South Africa" data-cur="ZAR" data-rate="0.14">South Africa (ZAR)</option>
-                <option value="Ghana" data-cur="GHS" data-rate="0.10">Ghana (GHS)</option>
-                <option value="Uganda" data-cur="UGX" data-rate="28.9">Uganda (UGX)</option>
-                <option value="Tanzania" data-cur="TZS" data-rate="19.5">Tanzania (TZS)</option>
-                <option value="Rwanda" data-cur="RWF" data-rate="9.8">Rwanda (RWF)</option>
+                <option value="Nigeria" data-cur="NGN" data-rate="12.8">Nigeria (NGN)</option>
+                <option value="South Africa" data-cur="ZAR" data-rate="0.15">South Africa (ZAR)</option>
+                <option value="Uganda" data-cur="UGX" data-rate="29.1">Uganda (UGX)</option>
+                <option value="Tanzania" data-cur="TZS" data-rate="19.8">Tanzania (TZS)</option>
+                <option value="Ghana" data-cur="GHS" data-rate="0.11">Ghana (GHS)</option>
             </select>
             <input id="regPass" type="password" placeholder="Create Password">
-            <button onclick="handleRegister()">Proceed to Plans</button>
+            <button onclick="handleRegister()">Select Plan</button>
         </div>
     </div>
 
     <div id="plans" class="hidden">
         <h2 style="text-align:center;">Select Investment Tier</h2>
         <div class="grid-3">
-            <div class="card" style="text-align: center; border-top: 5px solid var(--primary);">
-                <h3>BASIC</h3><h2 id="p1">KES 2,000</h2><button onclick="selectPlan('Basic', 2000)">Choose Basic</button>
+            <div class="card" style="text-align:center; border-top: 5px solid var(--primary);">
+                <h3>BASIC</h3><h2 id="p1Val">2,000</h2><p>5% Profit / Min</p>
+                <button onclick="setPlan('Basic', 2000, 0.05)">Select Basic</button>
             </div>
-            <div class="card" style="text-align: center; border-top: 5px solid #cbd5e1;">
-                <h3>SILVER</h3><h2 id="p2">KES 5,000</h2><button onclick="selectPlan('Silver', 5000)">Choose Silver</button>
+            <div class="card" style="text-align:center; border-top: 5px solid var(--silver);">
+                <h3>SILVER</h3><h2 id="p2Val">5,000</h2><p>10% Profit / Min</p>
+                <button onclick="setPlan('Silver', 5000, 0.10)">Select Silver</button>
             </div>
-            <div class="card" style="text-align: center; border-top: 5px solid var(--gold);">
-                <h3>GOLD</h3><h2 id="p3">KES 10,000</h2><button onclick="selectPlan('Gold', 10000)">Choose Gold</button>
+            <div class="card" style="text-align:center; border-top: 5px solid var(--gold);">
+                <h3>GOLD</h3><h2 id="p3Val">10,000</h2><p>15% Profit / Min</p>
+                <button onclick="setPlan('Gold', 10000, 0.15)">Select Gold</button>
             </div>
         </div>
     </div>
 
     <div id="deposit" class="hidden">
         <div class="card" style="max-width: 500px; margin: auto;">
-            <h2 style="color:var(--mpesa);">Secure Deposit</h2>
-            <p>Send <b id="payAmt"></b> to the account below:</p>
-            <div class="mpesa-notice">
-                <small>MPESA / MOBILE MONEY:</small>
+            <h2 style="color:var(--mpesa);">Complete Activation</h2>
+            <p>To start your <b id="dPlan"></b> plan, send <b id="dAmount"></b> to:</p>
+            <div class="mpesa-box">
+                <small>MOBILE MONEY / MPESA:</small>
                 <h2 style="margin:5px 0;">+254 785 449 376</h2>
-                <p style="font-size: 12px; margin:0;">Name: ELITE HUB TRADING</p>
+                <p style="margin:0; font-size:12px;">Name: ELITE INVESTMENT HUB</p>
             </div>
-            <p style="font-size:12px; color:var(--text-gray); margin-top:10px;">*Non-Kenyan clients: Send equivalent USDT to address in Support Chat.</p>
-            <input id="mCode" placeholder="Enter Transaction ID / MPESA Code">
-            <button onclick="confirmPayment()">Submit Verification</button>
+            <p style="font-size:11px; margin-top:10px; color:var(--text-gray);">Non-Kenyan clients use USDT (TRC20). Contact Support for address.</p>
+            <input id="txCode" placeholder="Enter Transaction ID / M-Pesa Code">
+            <button onclick="submitTx()">Submit for Approval</button>
         </div>
     </div>
 
@@ -124,151 +126,162 @@
             <h2>Login</h2>
             <input id="lPhone" placeholder="Phone Number">
             <input id="lPass" type="password" placeholder="Password">
-            <button onclick="handleLogin()">Access Dashboard</button>
+            <button onclick="handleLogin()">Enter Dashboard</button>
         </div>
     </div>
 
     <div id="dashboard" class="hidden">
+        <div class="card">
+            <div class="live-indicator"><div class="dot"></div> LIVE TRADING ENGINE ACTIVE</div>
+            <h3 id="dashName">User</h3>
+            <p id="dashStatus"></p>
+        </div>
         <div class="grid-3">
-            <div class="card"><h4 id="uName">User</h4><p id="uStatus"></p></div>
-            <div class="card"><p>Account Balance</p><h2 id="uBal">0.00</h2></div>
-            <div class="card"><p>Live Profits</p><h2 id="uProf" style="color: var(--primary);">0.00</h2></div>
+            <div class="card"><p>Principal Investment</p><h2 id="dashInv">0.00</h2></div>
+            <div class="card"><p>Live Profit</p><h2 id="dashProf" style="color: var(--primary);">0.00</h2></div>
         </div>
         <div class="card">
             <h3>Support Inbox</h3>
-            <textarea id="hMsg" placeholder="Send your feedback or transaction issue here..."></textarea>
-            <button onclick="sendHelp()" style="background:#3b82f6;">Submit Comment</button>
+            <textarea id="hMsg" placeholder="Send a message to Admin..."></textarea>
+            <button onclick="sendSupport()" style="background:#3b82f6;">Send Comment</button>
         </div>
-        <button onclick="logout()" style="background:var(--danger); width:auto;">Logout</button>
+        <button onclick="logout()" style="background:var(--danger); width:auto;">Secure Logout</button>
     </div>
 
     <div id="adminPanel" class="hidden">
         <div class="card">
-            <h2>Global Master Ledger</h2>
+            <h2>System Ledger</h2>
             <div style="overflow-x:auto;">
-                <table>
-                    <thead>
-                        <tr><th>Time</th><th>Name</th><th>Country</th><th>Plan</th><th>Code</th><th>Status</th><th>Action</th></tr>
-                    </thead>
-                    <tbody id="ledger"></tbody>
+                <table id="adminTable">
+                    <thead><tr><th>Time</th><th>Name</th><th>Country</th><th>Plan</th><th>Code</th><th>Status</th><th>Action</th></tr></thead>
+                    <tbody id="ledgerBody"></tbody>
                 </table>
             </div>
         </div>
-        <div class="card"><h3>User Comments</h3><div id="inbox"></div></div>
-        <button onclick="showPage('home')" style="background:#334155;">Exit Admin</button>
+        <div class="card"><h3>Member Feedback</h3><div id="inboxBody"></div></div>
+        <button onclick="showPage('home')" style="background:#334155;">Exit</button>
     </div>
 
     <div id="adminLogin" class="hidden">
-        <div class="card" style="max-width: 400px; margin: auto;">
-            <h3>Admin Portal</h3>
-            <input id="aPass" type="password">
-            <button onclick="if(aPass.value==='elite123') showPage('adminPanel')">Unlock</button>
-        </div>
+        <div class="card" style="max-width: 400px; margin: auto;"><input id="aKey" type="password" placeholder="Key"><button onclick="if(aKey.value==='elite123') showPage('adminPanel')">Unlock</button></div>
     </div>
 
 </div>
 
 <footer>
     <p>&copy; 2026 Elite Investment Hub | Built for Africa</p>
-    <p style="font-size: 11px;">+254 785 449 376 | support@elitehub.africa</p>
+    <p style="font-size: 11px;">+254 785 449 376 | Registered Institutional Partner</p>
 </footer>
 
 <script>
-    let users = JSON.parse(localStorage.getItem("v5_users")) || [];
-    let msgs = JSON.parse(localStorage.getItem("v5_msgs")) || [];
-    let temp = null;
+    let users = JSON.parse(localStorage.getItem("ELITE_MASTER_USERS")) || [];
+    let msgs = JSON.parse(localStorage.getItem("ELITE_MASTER_MSGS")) || [];
     let activeUser = null;
+    let tempReg = null;
 
-    function saveData() {
-        localStorage.setItem("v5_users", JSON.stringify(users));
-        localStorage.setItem("v5_msgs", JSON.stringify(msgs));
+    // --- LIVE GROWTH ENGINE ---
+    setInterval(() => {
+        let updateNeeded = false;
+        users.forEach(u => {
+            if (u.status === "Active") {
+                // Profit increases by percentage of base investment every minute
+                u.profit += (u.baseAmount * u.growthRate);
+                updateNeeded = true;
+            }
+        });
+        if (updateNeeded) {
+            localStorage.setItem("ELITE_MASTER_USERS", JSON.stringify(users));
+            if (activeUser) refreshUI();
+        }
+    }, 60000);
+
+    function refreshUI() {
+        let u = users.find(x => x.phone === activeUser.phone);
+        document.getElementById('dashInv').innerText = `${u.currency} ${(u.balance * u.rate).toLocaleString()}`;
+        document.getElementById('dashProf').innerText = `${u.currency} ${(u.profit * u.rate).toLocaleString()}`;
     }
 
+    // --- NAVIGATION ---
     function showPage(id) {
         document.querySelectorAll('.container > div').forEach(d => d.classList.add('hidden'));
         document.getElementById(id).classList.remove('hidden');
         if(id === 'adminPanel') renderAdmin();
+        window.scrollTo(0,0);
     }
 
-    function updatePlanView() {
+    function updateCurrencyView() {
         const sel = regCountry.options[regCountry.selectedIndex];
-        const rate = parseFloat(sel.getAttribute('data-rate'));
-        const cur = sel.getAttribute('data-cur');
-        document.getElementById('p1').innerText = `${cur} ${(2000 * rate).toLocaleString()}`;
-        document.getElementById('p2').innerText = `${cur} ${(5000 * rate).toLocaleString()}`;
-        document.getElementById('p3').innerText = `${cur} ${(10000 * rate).toLocaleString()}`;
+        const r = parseFloat(sel.getAttribute('data-rate'));
+        const c = sel.getAttribute('data-cur');
+        document.getElementById('p1Val').innerText = `${c} ${(2000*r).toLocaleString()}`;
+        document.getElementById('p2Val').innerText = `${c} ${(5000*r).toLocaleString()}`;
+        document.getElementById('p3Val').innerText = `${c} ${(10000*r).toLocaleString()}`;
     }
 
     function handleRegister() {
         const sel = regCountry.options[regCountry.selectedIndex];
-        temp = {
+        tempReg = {
             name: regName.value, phone: regPhone.value, pass: regPass.value,
             country: regCountry.value, currency: sel.getAttribute('data-cur'),
             rate: parseFloat(sel.getAttribute('data-rate')),
-            time: new Date().toLocaleString(), profit: 0, balance: 0, status: "Waiting Payment"
+            time: new Date().toLocaleString(), profit: 0, balance: 0, status: "Pending Payment"
         };
         showPage('plans');
     }
 
-    function selectPlan(plan, base) {
-        temp.plan = plan;
-        temp.baseAmount = base;
-        payAmt.innerText = `${temp.currency} ${(base * temp.rate).toLocaleString()}`;
+    function setPlan(p, base, growth) {
+        tempReg.plan = p; tempReg.baseAmount = base; tempReg.growthRate = growth;
+        dPlan.innerText = p;
+        dAmount.innerText = `${tempReg.currency} ${(base * tempReg.rate).toLocaleString()}`;
         showPage('deposit');
     }
 
-    function confirmPayment() {
-        if(!mCode.value) return alert("Code Required");
-        temp.mCode = mCode.value;
-        temp.status = "Pending Approval";
-        users.push(temp);
-        saveData();
-        alert("Verification Sent!");
+    function submitTx() {
+        tempReg.code = txCode.value;
+        tempReg.status = "Pending Approval";
+        users.push(tempReg);
+        localStorage.setItem("ELITE_MASTER_USERS", JSON.stringify(users));
+        alert("Details submitted! Activation takes 15-30 mins.");
         showPage('login');
     }
 
     function handleLogin() {
         let u = users.find(x => x.phone == lPhone.value && x.pass == lPass.value);
         if(u) {
-            activeUser = u;
-            showPage('dashboard');
-            uName.innerText = u.name;
-            uBal.innerText = `${u.currency} ${(u.balance * u.rate).toLocaleString()}`;
-            uProf.innerText = `${u.currency} ${(u.profit * u.rate).toLocaleString()}`;
-            uStatus.innerHTML = `Plan: ${u.plan} | <span class="${u.status==='Active'?'status-active':'status-pending'}">${u.status}</span>`;
-        } else alert("Error");
+            activeUser = u; showPage('dashboard');
+            dashName.innerText = u.name;
+            dashStatus.innerHTML = `Plan: ${u.plan} | Status: <span class="${u.status==='Active'?'status-active':'status-pending'}">${u.status}</span>`;
+            refreshUI();
+        } else alert("Invalid Credentials");
     }
 
     function renderAdmin() {
-        const lb = document.getElementById("ledger");
-        lb.innerHTML = users.map((u, i) => `
+        ledgerBody.innerHTML = users.map((u, i) => `
             <tr>
-                <td>${u.time}</td><td>${u.name}</td><td>${u.country}</td><td>${u.plan}</td><td>${u.mCode}</td>
+                <td>${u.time}</td><td>${u.name}</td><td>${u.country}</td><td>${u.plan}</td><td>${u.code}</td>
                 <td class="${u.status==='Active'?'status-active':'status-pending'}">${u.status}</td>
-                <td>${u.status==='Pending Approval'?`<button onclick="approve(${i})">Approve</button>`:'-'}</td>
+                <td>${u.status==='Pending Approval'?`<button onclick="approve(${i})" style="padding:5px;">APPROVE</button>`:'-'}</td>
             </tr>
         `).join('');
-
-        const ib = document.getElementById("inbox");
-        ib.innerHTML = msgs.map(m => `<div class='card'><b>${m.from}:</b> ${m.msg}</div>`).join('');
+        inboxBody.innerHTML = msgs.map(m => `<div class='card'><small>${m.time}</small><br><b>${m.from}:</b> ${m.msg}</div>`).join('');
     }
 
     function approve(i) {
         users[i].status = "Active";
         users[i].balance = users[i].baseAmount;
-        saveData();
+        localStorage.setItem("ELITE_MASTER_USERS", JSON.stringify(users));
         renderAdmin();
     }
 
-    function sendHelp() {
-        msgs.push({ from: activeUser.phone, msg: hMsg.value });
-        saveData();
-        alert("Sent");
+    function sendSupport() {
+        msgs.push({ from: activeUser.phone, msg: hMsg.value, time: new Date().toLocaleTimeString() });
+        localStorage.setItem("ELITE_MASTER_MSGS", JSON.stringify(msgs));
+        alert("Sent to admin!");
         hMsg.value = "";
     }
 
     function logout() { activeUser = null; showPage('home'); }
-    updatePlanView();
+    updateCurrencyView();
 </script>
 
 </body>
