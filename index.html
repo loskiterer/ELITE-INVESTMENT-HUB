@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ELITE INVESTMENT HUB</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{font-family:Arial;margin:0;background:#f4f6f9;}
+header{background:#0d1b2a;color:white;padding:15px;text-align:center;}
+.container{padding:20px;}
+.card{background:white;padding:20px;margin-bottom:15px;border-radius:10px;box-shadow:0 4px 8px rgba(0,0,0,0.1);}
+button{padding:10px;border:none;border-radius:5px;background:#1b263b;color:white;width:100%;cursor:pointer;margin-top:10px;}
+input,select{width:100%;padding:10px;margin:5px 0;border-radius:5px;border:1px solid #ccc;}
+.progress{background:#ddd;height:10px;border-radius:5px;}
+.progress-bar{height:10px;background:green;border-radius:5px;}
+.status-active{color:green;font-weight:bold;}
+.status-inactive{color:red;font-weight:bold;}
+.hidden{display:none;}
+.nav-btn{background:#415a77;margin-bottom:10px;}
+</style>
+</head>
+<body>
+
+<header>
+<h2>ELITE INVESTMENT HUB</h2>
+</header>
+
+<div class="container">
+
+<!-- HOME -->
+<div id="home">
+<div class="card">
+<h3>Welcome to ELITE INVESTMENT HUB</h3>
+<p>Professional Forex & Crypto Investment Platform</p>
+<button onclick="showRegister()">Register</button>
+<button onclick="showLogin()">Login</button>
+<button onclick="showAdminLogin()">Admin</button>
+</div>
+</div>
+
+<!-- REGISTER -->
+<div id="register" class="hidden">
+<div class="card">
+<h3>Register</h3>
+<input id="regName" placeholder="Full Name">
+<input id="regPhone" placeholder="Phone Number">
+<input id="regPass" type="password" placeholder="Password">
+<button onclick="register()">Create Account</button>
+<button onclick="goHome()" class="nav-btn">Back</button>
+</div>
+</div>
+
+<!-- LOGIN -->
+<div id="login" class="hidden">
+<div class="card">
+<h3>User Login</h3>
+<input id="loginPhone" placeholder="Phone Number">
+<input id="loginPass" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+<button onclick="goHome()" class="nav-btn">Back</button>
+</div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div id="adminLogin" class="hidden">
+<div class="card">
+<h3>Admin Login</h3>
+<input id="adminPass" type="password" placeholder="Admin Password">
+<button onclick="adminLogin()">Login</button>
+<button onclick="goHome()" class="nav-btn">Back</button>
+</div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="hidden">
+<div class="card">
+<h3 id="userName"></h3>
+<p>Status: <span id="status"></span></p>
+<p>Investment: <span id="investment"></span></p>
+<p>Profit: <span id="profit"></span></p>
+<p>Withdrawals: <span id="withdrawals"></span></p>
+<div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+</div>
+
+<div class="card">
+<h3>Deposit via USDT (TRC20)</h3>
+<p><b>Wallet Address:</b></p>
+<p style="word-break:break-all;">TPfoEwLhjW3pBokNSem1oTVEp26mNSvfPR</p>
+</div>
+
+<button onclick="logout()">Logout</button>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel" class="hidden">
+<div class="card">
+<h3>Add / Edit User</h3>
+<input id="aName" placeholder="Name">
+<input id="aPhone" placeholder="Phone">
+<input id="aPass" placeholder="Password">
+<input id="aInvestment" type="number" placeholder="Investment Amount">
+<input id="aProfit" type="number" placeholder="Profit">
+<input id="aWithdraw" type="number" placeholder="Withdrawals">
+<input id="aProgress" type="number" placeholder="Progress %">
+<select id="aStatus">
+<option>Active</option>
+<option>Inactive</option>
+</select>
+<button onclick="saveUser()">Save User</button>
+</div>
+
+<div class="card">
+<h3>All Users</h3>
+<div id="userList"></div>
+</div>
+
+<button onclick="adminLogout()">Logout</button>
+</div>
+
+</div>
+
+<script>
+let users = JSON.parse(localStorage.getItem("users")) || [];
+const ADMIN_PASSWORD = "elite123";
+
+function saveData(){ localStorage.setItem("users", JSON.stringify(users)); }
+
+function showRegister(){ hideAll(); document.getElementById("register").style.display="block"; }
+function showLogin(){ hideAll(); document.getElementById("login").style.display="block"; }
+function showAdminLogin(){ hideAll(); document.getElementById("adminLogin").style.display="block"; }
+function goHome(){ hideAll(); document.getElementById("home").style.display="block"; }
+function hideAll(){
+document.getElementById("home").style.display="none";
+document.getElementById("register").style.display="none";
+document.getElementById("login").style.display="none";
+document.getElementById("adminLogin").style.display="none";
+document.getElementById("dashboard").style.display="none";
+document.getElementById("adminPanel").style.display="none";
+}
+
+function register(){
+let user={
+name:regName.value,
+phone:regPhone.value,
+pass:regPass.value,
+investment:0,
+profit:0,
+withdrawals:0,
+progress:0,
+status:"Inactive"
+};
+users.push(user);
+saveData();
+alert("Registered Successfully");
+goHome();
+}
+
+function login(){
+let u=users.find(x=>x.phone==loginPhone.value && x.pass==loginPass.value);
+if(u){
+localStorage.setItem("currentUser",u.phone);
+loadDashboard();
+}else alert("Invalid details");
+}
+
+function loadDashboard(){
+hideAll();
+document.getElementById("dashboard").style.display="block";
+let phone=localStorage.getItem("currentUser");
+let u=users.find(x=>x.phone==phone);
+userName.innerText=u.name;
+investment.innerText="KES "+u.investment;
+profit.innerText="KES "+u.profit;
+withdrawals.innerText="KES "+u.withdrawals;
+status.innerText=u.status;
+status.className=u.status=="Active"?"status-active":"status-inactive";
+progressBar.style.width=u.progress+"%";
+}
+
+function logout(){ localStorage.removeItem("currentUser"); goHome(); }
+
+function adminLogin(){
+if(adminPass.value==ADMIN_PASSWORD){
+hideAll();
+document.getElementById("adminPanel").style.display="block";
+renderUsers();
+}else alert("Wrong password");
+}
+
+function adminLogout(){ goHome(); }
+
+function saveUser(){
+let phone=aPhone.value;
+let existing=users.find(x=>x.phone==phone);
+let user={
+name:aName.value,
+phone:phone,
+pass:aPass.value,
+investment:Number(aInvestment.value),
+profit:Number(aProfit.value),
+withdrawals:Number(aWithdraw.value),
+progress:Number(aProgress.value),
+status:aStatus.value
+};
+if(existing){
+users=users.map(x=>x.phone==phone?user:x);
+}else users.push(user);
+saveData();
+renderUsers();
+alert("Saved");
+}
+
+function renderUsers(){
+let list="";
+users.forEach(u=>{
+list+=`<div class='card'>
+<b>${u.name}</b><br>
+${u.phone}<br>
+${u.status}<br>
+Investment: ${u.investment}
+</div>`;
+});
+userList.innerHTML=list;
+}
+</script>
+
+</body>
+</html>
