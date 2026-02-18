@@ -3,308 +3,272 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELITE INVESTMENT HUB | Professional Trading</title>
-    <script src="https://s3.tradingview.com/tv.js"></script>
+    <title>ELITE HUB | Global African Investment</title>
     <style>
         :root {
             --primary: #22c55e;
             --bg-dark: #0b0f1a;
             --card-bg: rgba(255, 255, 255, 0.05);
             --text-gray: #94a3b8;
+            --danger: #ef4444;
+            --gold: #ffb700;
+            --mpesa: #49aa29;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            background: var(--bg-dark);
-            color: white;
-            overflow-x: hidden;
-        }
-
-        /* Glassmorphism Styles */
-        .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 25px;
-            margin-bottom: 20px;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-
-        header {
-            background: rgba(13, 27, 42, 0.9);
-            padding: 15px;
-            text-align: center;
-            border-bottom: 1px solid var(--primary);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
+        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg-dark); color: white; scroll-behavior: smooth; }
+        .card { background: var(--card-bg); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 25px; margin-bottom: 20px; border-radius: 15px; transition: 0.3s; }
+        header { background: rgba(11, 15, 26, 0.95); padding: 15px; text-align: center; border-bottom: 1px solid var(--primary); position: sticky; top: 0; z-index: 1000; }
         .container { padding: 20px; max-width: 1200px; margin: auto; }
-
-        button {
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            background: var(--primary);
-            color: white;
-            font-weight: bold;
-            width: 100%;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        button:active { transform: scale(0.98); }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            background: #1e293b;
-            color: white;
-            box-sizing: border-box;
-        }
-
-        .progress { background: #334155; height: 10px; border-radius: 5px; margin-top: 10px; }
-        .progress-bar { 
-            height: 10px; 
-            background: linear-gradient(90deg, #22c55e, #4ade80); 
-            border-radius: 5px; 
-            width: 0%; 
-            transition: width 1.5s ease-in-out;
-        }
-
-        .status-active { color: #22c55e; font-weight: bold; }
-        .status-inactive { color: #ef4444; font-weight: bold; }
+        
+        button { padding: 14px; border: none; border-radius: 8px; background: var(--primary); color: white; font-weight: bold; width: 100%; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:hover { opacity: 0.9; transform: scale(1.02); }
+        
+        input, select, textarea { width: 100%; padding: 14px; margin: 10px 0; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: white; box-sizing: border-box; }
+        
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .hidden { display: none; }
-        
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        
-        .wallet-box {
-            background: #000;
-            padding: 15px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: monospace;
-            border: 1px dashed var(--primary);
-        }
+        .status-active { color: var(--primary); font-weight: bold; }
+        .status-pending { color: var(--gold); font-weight: bold; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; }
+        th, td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: left; }
+        th { color: var(--primary); }
+
+        .mpesa-notice { background: #f0fdf4; color: #166534; padding: 20px; border-radius: 12px; border-left: 6px solid var(--mpesa); }
+        footer { background: #05070a; padding: 40px; text-align: center; border-top: 1px solid #1e293b; margin-top: 60px; color: var(--text-gray); }
     </style>
 </head>
 <body>
 
 <header>
-    <h2>ELITE INVESTMENT HUB</h2>
+    <h2 onclick="showPage('home')" style="cursor:pointer;">ELITE <span style="color: var(--primary);">INVESTMENT</span> HUB</h2>
 </header>
 
 <div class="container">
 
     <div id="home">
-        <div class="card" style="text-align: center;">
-            <h1>Institutional Trading for Everyone</h1>
-            <p style="color: var(--text-gray);">Secure, Automated, and Transparent Investment Solutions.</p>
-            <button onclick="showPage('register')">Get Started</button>
-            <button onclick="showPage('login')" style="background: transparent; border: 1px solid var(--primary); margin-top: 10px;">User Login</button>
-            <p onclick="showPage('adminLogin')" style="font-size: 12px; cursor: pointer; color: #475569; margin-top: 20px;">Admin Access</p>
+        <div class="card" style="text-align: center; padding: 60px 20px;">
+            <h1 style="font-size: 2.5rem;">The Premier African Investment Portal</h1>
+            <p style="color: var(--text-gray);">Automated ROI tailored for every African currency.</p>
+            <div style="max-width: 500px; margin: auto; display: flex; gap: 10px;">
+                <button onclick="showPage('register')">Register Now</button>
+                <button onclick="showPage('login')" style="background:transparent; border: 1px solid var(--primary);">Login</button>
+            </div>
         </div>
+
+        <h2 style="text-align:center; color:var(--primary);">How It Works</h2>
+        <div class="grid-3">
+            <div class="card"><h3>1. Sign Up</h3><p>Choose your country and create your account instantly.</p></div>
+            <div class="card"><h3>2. Activate</h3><p>Pay via M-Pesa or Crypto. Admin approves your plan.</p></div>
+            <div class="card"><h3>3. Earn</h3><p>Receive daily profits directly to your dashboard.</p></div>
+        </div>
+
+        <div class="card" style="margin-top: 40px; text-align: center;">
+            <h2 style="color:var(--primary);">About Us</h2>
+            <p>Elite Hub is a pan-African fintech company specializing in algorithmic trading. Our mission is to democratize institutional wealth tools for everyone from Nairobi to Lagos.</p>
+        </div>
+        <center><p onclick="showPage('adminLogin')" style="cursor:pointer; color:#475569; font-size: 10px; margin-top: 20px;">Staff Authentication</p></center>
     </div>
 
     <div id="register" class="hidden">
-        <div class="card">
-            <h3>Create Account</h3>
+        <div class="card" style="max-width: 450px; margin: auto;">
+            <h2>Register Account</h2>
             <input id="regName" placeholder="Full Name">
-            <input id="regPhone" placeholder="Phone Number">
-            <input id="regPass" type="password" placeholder="Password">
-            <button onclick="register()">Register</button>
-            <button onclick="showPage('home')" style="background:#334155; margin-top:10px;">Back</button>
+            <input id="regPhone" placeholder="Mobile Number (e.g. 07...)">
+            <select id="regCountry" onchange="updatePlanView()">
+                <option value="Kenya" data-cur="KES" data-rate="1">Kenya (KES)</option>
+                <option value="Nigeria" data-cur="NGN" data-rate="12.5">Nigeria (NGN)</option>
+                <option value="South Africa" data-cur="ZAR" data-rate="0.14">South Africa (ZAR)</option>
+                <option value="Ghana" data-cur="GHS" data-rate="0.10">Ghana (GHS)</option>
+                <option value="Uganda" data-cur="UGX" data-rate="28.9">Uganda (UGX)</option>
+                <option value="Tanzania" data-cur="TZS" data-rate="19.5">Tanzania (TZS)</option>
+                <option value="Rwanda" data-cur="RWF" data-rate="9.8">Rwanda (RWF)</option>
+            </select>
+            <input id="regPass" type="password" placeholder="Create Password">
+            <button onclick="handleRegister()">Proceed to Plans</button>
+        </div>
+    </div>
+
+    <div id="plans" class="hidden">
+        <h2 style="text-align:center;">Select Investment Tier</h2>
+        <div class="grid-3">
+            <div class="card" style="text-align: center; border-top: 5px solid var(--primary);">
+                <h3>BASIC</h3><h2 id="p1">KES 2,000</h2><button onclick="selectPlan('Basic', 2000)">Choose Basic</button>
+            </div>
+            <div class="card" style="text-align: center; border-top: 5px solid #cbd5e1;">
+                <h3>SILVER</h3><h2 id="p2">KES 5,000</h2><button onclick="selectPlan('Silver', 5000)">Choose Silver</button>
+            </div>
+            <div class="card" style="text-align: center; border-top: 5px solid var(--gold);">
+                <h3>GOLD</h3><h2 id="p3">KES 10,000</h2><button onclick="selectPlan('Gold', 10000)">Choose Gold</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="deposit" class="hidden">
+        <div class="card" style="max-width: 500px; margin: auto;">
+            <h2 style="color:var(--mpesa);">Secure Deposit</h2>
+            <p>Send <b id="payAmt"></b> to the account below:</p>
+            <div class="mpesa-notice">
+                <small>MPESA / MOBILE MONEY:</small>
+                <h2 style="margin:5px 0;">+254 785 449 376</h2>
+                <p style="font-size: 12px; margin:0;">Name: ELITE HUB TRADING</p>
+            </div>
+            <p style="font-size:12px; color:var(--text-gray); margin-top:10px;">*Non-Kenyan clients: Send equivalent USDT to address in Support Chat.</p>
+            <input id="mCode" placeholder="Enter Transaction ID / MPESA Code">
+            <button onclick="confirmPayment()">Submit Verification</button>
         </div>
     </div>
 
     <div id="login" class="hidden">
-        <div class="card">
-            <h3>Login</h3>
-            <input id="loginPhone" placeholder="Phone Number">
-            <input id="loginPass" type="password" placeholder="Password">
-            <button onclick="login()">Access Dashboard</button>
-            <button onclick="showPage('home')" style="background:#334155; margin-top:10px;">Back</button>
-        </div>
-    </div>
-
-    <div id="adminLogin" class="hidden">
-        <div class="card">
-            <h3>Admin Authentication</h3>
-            <input id="adminPass" type="password" placeholder="Admin Secret Key">
-            <button onclick="adminLogin()">Unlock Portal</button>
+        <div class="card" style="max-width: 450px; margin: auto;">
+            <h2>Login</h2>
+            <input id="lPhone" placeholder="Phone Number">
+            <input id="lPass" type="password" placeholder="Password">
+            <button onclick="handleLogin()">Access Dashboard</button>
         </div>
     </div>
 
     <div id="dashboard" class="hidden">
         <div class="grid-3">
-            <div class="card">
-                <h4 id="userName">Welcome</h4>
-                <p>Account Status: <span id="status"></span></p>
-                <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
-            </div>
-            <div class="card">
-                <p>Investment</p>
-                <h2 id="investment">KES 0.00</h2>
-            </div>
-            <div class="card">
-                <p>Live Profit</p>
-                <h2 id="profit" style="color: var(--primary);">KES 0.00</h2>
-            </div>
+            <div class="card"><h4 id="uName">User</h4><p id="uStatus"></p></div>
+            <div class="card"><p>Account Balance</p><h2 id="uBal">0.00</h2></div>
+            <div class="card"><p>Live Profits</p><h2 id="uProf" style="color: var(--primary);">0.00</h2></div>
         </div>
-
         <div class="card">
-            <h3>Market Overview</h3>
-            <div id="tradingview_chart"></div>
+            <h3>Support Inbox</h3>
+            <textarea id="hMsg" placeholder="Send your feedback or transaction issue here..."></textarea>
+            <button onclick="sendHelp()" style="background:#3b82f6;">Submit Comment</button>
         </div>
-
-        <div class="grid-3">
-            <div class="card">
-                <h3>Deposit USDT (TRC20)</h3>
-                <div class="wallet-box">
-                    <span id="walletAddr">TPfoEwLhjW3pBokNSem1oTVEp26mNSvfPR</span>
-                    <small style="color: var(--primary); cursor: pointer;" onclick="copyWallet()">COPY</small>
-                </div>
-                <input type="text" id="txHash" placeholder="Transaction Hash">
-                <button onclick="alert('Notification sent to Admin!')">Confirm Transfer</button>
-            </div>
-            <div class="card">
-                <h3>Withdraw</h3>
-                <input type="number" placeholder="Amount">
-                <input type="text" placeholder="Your Wallet Address">
-                <button style="background: #334155;">Request Payout</button>
-            </div>
-        </div>
-        <button onclick="logout()" style="background: #ef4444; width: auto; padding: 10px 30px;">Logout</button>
+        <button onclick="logout()" style="background:var(--danger); width:auto;">Logout</button>
     </div>
 
     <div id="adminPanel" class="hidden">
         <div class="card">
-            <h3>Manage Users</h3>
-            <div id="userList"></div>
-            <hr style="opacity: 0.1; margin: 20px 0;">
-            <h3>Update Account</h3>
-            <input id="aPhone" placeholder="User Phone">
-            <input id="aInvestment" type="number" placeholder="Set Investment Amount">
-            <input id="aProfit" type="number" placeholder="Set Profit">
-            <input id="aProgress" type="number" placeholder="Set Progress %">
-            <select id="aStatus">
-                <option>Active</option>
-                <option>Inactive</option>
-            </select>
-            <button onclick="saveUser()">Update Database</button>
-            <button onclick="showPage('home')" style="background:#334155; margin-top:10px;">Exit Admin</button>
+            <h2>Global Master Ledger</h2>
+            <div style="overflow-x:auto;">
+                <table>
+                    <thead>
+                        <tr><th>Time</th><th>Name</th><th>Country</th><th>Plan</th><th>Code</th><th>Status</th><th>Action</th></tr>
+                    </thead>
+                    <tbody id="ledger"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card"><h3>User Comments</h3><div id="inbox"></div></div>
+        <button onclick="showPage('home')" style="background:#334155;">Exit Admin</button>
+    </div>
+
+    <div id="adminLogin" class="hidden">
+        <div class="card" style="max-width: 400px; margin: auto;">
+            <h3>Admin Portal</h3>
+            <input id="aPass" type="password">
+            <button onclick="if(aPass.value==='elite123') showPage('adminPanel')">Unlock</button>
         </div>
     </div>
 
 </div>
 
+<footer>
+    <p>&copy; 2026 Elite Investment Hub | Built for Africa</p>
+    <p style="font-size: 11px;">+254 785 449 376 | support@elitehub.africa</p>
+</footer>
+
 <script>
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-    const ADMIN_PASSWORD = "elite123";
+    let users = JSON.parse(localStorage.getItem("v5_users")) || [];
+    let msgs = JSON.parse(localStorage.getItem("v5_msgs")) || [];
+    let temp = null;
+    let activeUser = null;
 
-    function saveData() { localStorage.setItem("users", JSON.stringify(users)); }
-
-    function showPage(pageId) {
-        document.querySelectorAll('.container > div').forEach(div => div.classList.add('hidden'));
-        document.getElementById(pageId).classList.remove('hidden');
-        if(pageId === 'dashboard') loadChart();
+    function saveData() {
+        localStorage.setItem("v5_users", JSON.stringify(users));
+        localStorage.setItem("v5_msgs", JSON.stringify(msgs));
     }
 
-    function register() {
-        let user = {
+    function showPage(id) {
+        document.querySelectorAll('.container > div').forEach(d => d.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
+        if(id === 'adminPanel') renderAdmin();
+    }
+
+    function updatePlanView() {
+        const sel = regCountry.options[regCountry.selectedIndex];
+        const rate = parseFloat(sel.getAttribute('data-rate'));
+        const cur = sel.getAttribute('data-cur');
+        document.getElementById('p1').innerText = `${cur} ${(2000 * rate).toLocaleString()}`;
+        document.getElementById('p2').innerText = `${cur} ${(5000 * rate).toLocaleString()}`;
+        document.getElementById('p3').innerText = `${cur} ${(10000 * rate).toLocaleString()}`;
+    }
+
+    function handleRegister() {
+        const sel = regCountry.options[regCountry.selectedIndex];
+        temp = {
             name: regName.value, phone: regPhone.value, pass: regPass.value,
-            investment: 0, profit: 0, withdrawals: 0, progress: 0, status: "Inactive"
+            country: regCountry.value, currency: sel.getAttribute('data-cur'),
+            rate: parseFloat(sel.getAttribute('data-rate')),
+            time: new Date().toLocaleString(), profit: 0, balance: 0, status: "Waiting Payment"
         };
-        users.push(user);
+        showPage('plans');
+    }
+
+    function selectPlan(plan, base) {
+        temp.plan = plan;
+        temp.baseAmount = base;
+        payAmt.innerText = `${temp.currency} ${(base * temp.rate).toLocaleString()}`;
+        showPage('deposit');
+    }
+
+    function confirmPayment() {
+        if(!mCode.value) return alert("Code Required");
+        temp.mCode = mCode.value;
+        temp.status = "Pending Approval";
+        users.push(temp);
         saveData();
-        alert("Account Created!");
+        alert("Verification Sent!");
         showPage('login');
     }
 
-    function login() {
-        let u = users.find(x => x.phone == loginPhone.value && x.pass == loginPass.value);
-        if (u) {
-            localStorage.setItem("currentUser", u.phone);
-            loadDashboard();
-        } else alert("Access Denied");
+    function handleLogin() {
+        let u = users.find(x => x.phone == lPhone.value && x.pass == lPass.value);
+        if(u) {
+            activeUser = u;
+            showPage('dashboard');
+            uName.innerText = u.name;
+            uBal.innerText = `${u.currency} ${(u.balance * u.rate).toLocaleString()}`;
+            uProf.innerText = `${u.currency} ${(u.profit * u.rate).toLocaleString()}`;
+            uStatus.innerHTML = `Plan: ${u.plan} | <span class="${u.status==='Active'?'status-active':'status-pending'}">${u.status}</span>`;
+        } else alert("Error");
     }
 
-    function loadDashboard() {
-        showPage('dashboard');
-        let phone = localStorage.getItem("currentUser");
-        let u = users.find(x => x.phone == phone);
-        document.getElementById("userName").innerText = "Welcome, " + u.name;
-        document.getElementById("investment").innerText = "KES " + u.investment;
-        document.getElementById("profit").innerText = "KES " + u.profit;
-        document.getElementById("status").innerText = u.status;
-        document.getElementById("status").className = u.status == "Active" ? "status-active" : "status-inactive";
-        document.getElementById("progressBar").style.width = u.progress + "%";
+    function renderAdmin() {
+        const lb = document.getElementById("ledger");
+        lb.innerHTML = users.map((u, i) => `
+            <tr>
+                <td>${u.time}</td><td>${u.name}</td><td>${u.country}</td><td>${u.plan}</td><td>${u.mCode}</td>
+                <td class="${u.status==='Active'?'status-active':'status-pending'}">${u.status}</td>
+                <td>${u.status==='Pending Approval'?`<button onclick="approve(${i})">Approve</button>`:'-'}</td>
+            </tr>
+        `).join('');
+
+        const ib = document.getElementById("inbox");
+        ib.innerHTML = msgs.map(m => `<div class='card'><b>${m.from}:</b> ${m.msg}</div>`).join('');
     }
 
-    // REAL-TIME PROFIT TICKER
-    setInterval(() => {
-        let phone = localStorage.getItem("currentUser");
-        if (!phone) return;
-        users = users.map(u => {
-            if (u.phone === phone && u.status === "Active") {
-                u.profit = parseFloat((u.profit + (u.investment * 0.00001)).toFixed(4));
-                document.getElementById("profit").innerText = "KES " + u.profit;
-            }
-            return u;
-        });
+    function approve(i) {
+        users[i].status = "Active";
+        users[i].balance = users[i].baseAmount;
         saveData();
-    }, 3000);
-
-    function adminLogin() {
-        if (adminPass.value == ADMIN_PASSWORD) {
-            showPage('adminPanel');
-            renderUsers();
-        } else alert("Invalid Admin Key");
+        renderAdmin();
     }
 
-    function saveUser() {
-        let u = users.find(x => x.phone == aPhone.value);
-        if (u) {
-            u.investment = Number(aInvestment.value);
-            u.profit = Number(aProfit.value);
-            u.progress = Number(aProgress.value);
-            u.status = aStatus.value;
-            saveData();
-            renderUsers();
-            alert("Updated");
-        } else alert("User not found");
+    function sendHelp() {
+        msgs.push({ from: activeUser.phone, msg: hMsg.value });
+        saveData();
+        alert("Sent");
+        hMsg.value = "";
     }
 
-    function renderUsers() {
-        let list = "<ul>";
-        users.forEach(u => {
-            list += `<li>${u.name} | ${u.phone} | Bal: ${u.investment} | Status: ${u.status}</li>`;
-        });
-        document.getElementById("userList").innerHTML = list + "</ul>";
-    }
-
-    function loadChart() {
-        new TradingView.widget({
-            "width": "100%", "height": 400, "symbol": "FX:EURUSD",
-            "interval": "D", "timezone": "Etc/UTC", "theme": "dark",
-            "style": "1", "locale": "en", "container_id": "tradingview_chart"
-        });
-    }
-
-    function copyWallet() {
-        navigator.clipboard.writeText("TPfoEwLhjW3pBokNSem1oTVEp26mNSvfPR");
-        alert("Address Copied!");
-    }
-
-    function logout() { localStorage.removeItem("currentUser"); showPage('home'); }
+    function logout() { activeUser = null; showPage('home'); }
+    updatePlanView();
 </script>
 
 </body>
