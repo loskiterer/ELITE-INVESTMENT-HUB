@@ -3,233 +3,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELITE INVESTMENT HUB | Global Multi-Currency</title>
+    <title>ELITE INVESTMENT HUB | Professional Trading</title>
     <script src="https://s3.tradingview.com/tv.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-
         :root {
-            --primary: #00ff88;
-            --mpesa: #49aa27;
-            --bg-body: #05070a;
-            --sidebar-bg: #0d1117;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
-            --text-main: #e6edf3;
-            --text-dim: #8b949e;
+            --primary: #22c55e;
+            --bg-dark: #0b0f1a;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-gray: #94a3b8;
         }
 
-        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg-body); color: var(--text-main); display: flex; min-height: 100vh; }
-        
-        /* Sidebar */
-        .sidebar { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 25px; position: fixed; height: 100vh; z-index: 100; }
-        .logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 40px; display: flex; align-items: center; gap: 10px; }
-        .nav-item { padding: 14px 18px; border-radius: 12px; color: var(--text-dim); cursor: pointer; display: flex; align-items: center; gap: 15px; margin-bottom: 8px; transition: 0.3s; }
-        .nav-item.active, .nav-item:hover { background: var(--glass); color: var(--primary); border: 1px solid var(--border); }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: var(--bg-dark);
+            color: white;
+            overflow-x: hidden;
+        }
 
-        /* Content */
-        .main-content { margin-left: 260px; flex: 1; padding: 40px; }
-        .card { background: var(--glass); border: 1px solid var(--border); padding: 25px; border-radius: 20px; backdrop-filter: blur(15px); margin-bottom: 25px; }
-        
-        /* Plans */
-        .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-        .plan-card { border: 1px solid var(--border); border-radius: 15px; padding: 25px; text-align: center; background: rgba(255,255,255,0.01); }
-        .plan-price { font-size: 1.6rem; font-weight: 800; color: var(--primary); margin: 15px 0; }
+        /* Glassmorphism Styles */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
 
-        input, select { width: 100%; padding: 14px; background: #161b22; border: 1px solid var(--border); border-radius: 10px; color: white; margin: 10px 0; }
-        .btn-pro { background: var(--primary); color: #000; font-weight: 700; border: none; padding: 15px; border-radius: 10px; cursor: pointer; width: 100%; transition: 0.3s; }
-        .btn-pro:hover { box-shadow: 0 0 15px var(--primary); }
-        
-        .social-float { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 10px; z-index: 1000; }
-        .social-icon { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; text-decoration: none; }
+        header {
+            background: rgba(13, 27, 42, 0.9);
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
+        .container { padding: 20px; max-width: 1200px; margin: auto; }
+
+        button {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: var(--primary);
+            color: white;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:active { transform: scale(0.98); }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #1e293b;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        .progress { background: #334155; height: 10px; border-radius: 5px; margin-top: 10px; }
+        .progress-bar { 
+            height: 10px; 
+            background: linear-gradient(90deg, #22c55e, #4ade80); 
+            border-radius: 5px; 
+            width: 0%; 
+            transition: width 1.5s ease-in-out;
+        }
+
+        .status-active { color: #22c55e; font-weight: bold; }
+        .status-inactive { color: #ef4444; font-weight: bold; }
         .hidden { display: none; }
-        #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-body); z-index: 2000; display: flex; align-items: center; justify-content: center; }
+        
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        
+        .wallet-box {
+            background: #000;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: monospace;
+            border: 1px dashed var(--primary);
+        }
     </style>
 </head>
 <body>
 
-    <div id="auth-screen">
-        <div class="card" style="width: 400px; text-align: center;">
-            <h2 style="color: var(--primary);">ELITE HUB JOIN</h2>
+<header>
+    <h2>ELITE INVESTMENT HUB</h2>
+</header>
+
+<div class="container">
+
+    <div id="home">
+        <div class="card" style="text-align: center;">
+            <h1>Institutional Trading for Everyone</h1>
+            <p style="color: var(--text-gray);">Secure, Automated, and Transparent Investment Solutions.</p>
+            <button onclick="showPage('register')">Get Started</button>
+            <button onclick="showPage('login')" style="background: transparent; border: 1px solid var(--primary); margin-top: 10px;">User Login</button>
+            <p onclick="showPage('adminLogin')" style="font-size: 12px; cursor: pointer; color: #475569; margin-top: 20px;">Admin Access</p>
+        </div>
+    </div>
+
+    <div id="register" class="hidden">
+        <div class="card">
+            <h3>Create Account</h3>
             <input id="regName" placeholder="Full Name">
             <input id="regPhone" placeholder="Phone Number">
-            <select id="regCountry" onchange="updateCurrencyPreview()">
-                <option value="Kenya">Kenya (KES)</option>
-                <option value="Nigeria">Nigeria (NGN)</option>
-                <option value="USA">USA (USD)</option>
-                <option value="UK">UK (GBP)</option>
-                <option value="South Africa">South Africa (ZAR)</option>
-                <option value="Ghana">Ghana (GHS)</option>
-            </select>
             <input id="regPass" type="password" placeholder="Password">
-            <button class="btn-pro" onclick="handleAuth()">Create Global Account</button>
+            <button onclick="register()">Register</button>
+            <button onclick="showPage('home')" style="background:#334155; margin-top:10px;">Back</button>
         </div>
     </div>
 
-    <nav class="sidebar hidden" id="sideNav">
-        <div class="logo"><i class="fas fa-chart-pie"></i> <span>ELITE HUB</span></div>
-        <div class="nav-item active" onclick="showPage('dash')"><i class="fas fa-home"></i> Dashboard</div>
-        <div class="nav-item" onclick="showPage('plans')"><i class="fas fa-gem"></i> Trading Plans</div>
-        <div class="nav-item" onclick="showPage('deposit')"><i class="fas fa-wallet"></i> Deposits</div>
-        <div class="nav-item" style="margin-top: auto; color: #ff4d4d;" onclick="logout()"><i class="fas fa-power-off"></i> Logout</div>
-    </nav>
-
-    <main class="main-content hidden" id="mainApp">
-        
-        <div id="page-dash">
-            <h1 id="welcomeText">Terminal</h1>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
-                <div class="card">
-                    <p>Available Balance</p>
-                    <h2 id="uBal">0.00</h2>
-                </div>
-                <div class="card">
-                    <p>Live Profit</p>
-                    <h2 id="uProf" style="color: var(--primary);">+ 0.00</h2>
-                </div>
-                <div class="card">
-                    <p>Local Currency</p>
-                    <h2 id="uCurr">-</h2>
-                </div>
-            </div>
-            <div class="card" style="height: 450px; padding: 10px;">
-                <div id="tv_chart" style="height: 100%;"></div>
-            </div>
+    <div id="login" class="hidden">
+        <div class="card">
+            <h3>Login</h3>
+            <input id="loginPhone" placeholder="Phone Number">
+            <input id="loginPass" type="password" placeholder="Password">
+            <button onclick="login()">Access Dashboard</button>
+            <button onclick="showPage('home')" style="background:#334155; margin-top:10px;">Back</button>
         </div>
+    </div>
 
-        <div id="page-plans" class="hidden">
-            <h1>Select Trading Strategy</h1>
-            <div class="plans-grid" id="plansGrid">
-                </div>
+    <div id="adminLogin" class="hidden">
+        <div class="card">
+            <h3>Admin Authentication</h3>
+            <input id="adminPass" type="password" placeholder="Admin Secret Key">
+            <button onclick="adminLogin()">Unlock Portal</button>
         </div>
+    </div>
 
-        <div id="page-deposit" class="hidden">
-            <h1>Fund Your Account</h1>
-            <div class="card" id="mpesaSection">
-                <h3 style="color: var(--mpesa);">M-Pesa Express (Kenya Only)</h3>
-                <input type="number" id="depAmt" placeholder="Amount in KES">
-                <button class="btn-pro" style="background:var(--mpesa); color:white;" onclick="deposit('KES')">STK Push</button>
+    <div id="dashboard" class="hidden">
+        <div class="grid-3">
+            <div class="card">
+                <h4 id="userName">Welcome</h4>
+                <p>Account Status: <span id="status"></span></p>
+                <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
             </div>
             <div class="card">
-                <h3>Global Deposit (USDT TRC20)</h3>
-                <p>All countries can deposit USDT. Rates are calculated automatically.</p>
-                <div style="background:#000; padding:15px; border-radius:10px; font-family:monospace; margin:10px 0; border: 1px dashed var(--primary);">
-                    TPfoEwLhjW3pBokNSem1oTVEp26mNSvfPR
-                </div>
-                <button class="btn-pro" onclick="alert('USDT Address Copied')">Copy Address</button>
+                <p>Investment</p>
+                <h2 id="investment">KES 0.00</h2>
+            </div>
+            <div class="card">
+                <p>Live Profit</p>
+                <h2 id="profit" style="color: var(--primary);">KES 0.00</h2>
             </div>
         </div>
 
-    </main>
+        <div class="card">
+            <h3>Market Overview</h3>
+            <div id="tradingview_chart"></div>
+        </div>
 
-    <div class="social-float">
-        <a href="https://wa.me/254785449376" class="social-icon" style="background: #25d366;"><i class="fab fa-whatsapp"></i></a>
-        <a href="https://t.me/loskiglobal" class="social-icon" style="background: #0088cc;"><i class="fab fa-telegram-plane"></i></a>
+        <div class="grid-3">
+            <div class="card">
+                <h3>Deposit USDT (TRC20)</h3>
+                <div class="wallet-box">
+                    <span id="walletAddr">TPfoEwLhjW3pBokNSem1oTVEp26mNSvfPR</span>
+                    <small style="color: var(--primary); cursor: pointer;" onclick="copyWallet()">COPY</small>
+                </div>
+                <input type="text" id="txHash" placeholder="Transaction Hash">
+                <button onclick="alert('Notification sent to Admin!')">Confirm Transfer</button>
+            </div>
+            <div class="card">
+                <h3>Withdraw</h3>
+                <input type="number" placeholder="Amount">
+                <input type="text" placeholder="Your Wallet Address">
+                <button style="background: #334155;">Request Payout</button>
+            </div>
+        </div>
+        <button onclick="logout()" style="background: #ef4444; width: auto; padding: 10px 30px;">Logout</button>
     </div>
 
-    <script>
-        const currencyMap = {
-            "Kenya": { code: "KES", symbol: "KSh", rate: 1 },
-            "Nigeria": { code: "NGN", symbol: "₦", rate: 12 }, // Example conversion rate
-            "USA": { code: "USD", symbol: "$", rate: 0.0075 },
-            "UK": { code: "GBP", symbol: "£", rate: 0.006 },
-            "South Africa": { code: "ZAR", symbol: "R", rate: 0.14 },
-            "Ghana": { code: "GHS", symbol: "GH₵", rate: 0.09 }
+    <div id="adminPanel" class="hidden">
+        <div class="card">
+            <h3>Manage Users</h3>
+            <div id="userList"></div>
+            <hr style="opacity: 0.1; margin: 20px 0;">
+            <h3>Update Account</h3>
+            <input id="aPhone" placeholder="User Phone">
+            <input id="aInvestment" type="number" placeholder="Set Investment Amount">
+            <input id="aProfit" type="number" placeholder="Set Profit">
+            <input id="aProgress" type="number" placeholder="Set Progress %">
+            <select id="aStatus">
+                <option>Active</option>
+                <option>Inactive</option>
+            </select>
+            <button onclick="saveUser()">Update Database</button>
+            <button onclick="showPage('home')" style="background:#334155; margin-top:10px;">Exit Admin</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    const ADMIN_PASSWORD = "elite123";
+
+    function saveData() { localStorage.setItem("users", JSON.stringify(users)); }
+
+    function showPage(pageId) {
+        document.querySelectorAll('.container > div').forEach(div => div.classList.add('hidden'));
+        document.getElementById(pageId).classList.remove('hidden');
+        if(pageId === 'dashboard') loadChart();
+    }
+
+    function register() {
+        let user = {
+            name: regName.value, phone: regPhone.value, pass: regPass.value,
+            investment: 0, profit: 0, withdrawals: 0, progress: 0, status: "Inactive"
         };
+        users.push(user);
+        saveData();
+        alert("Account Created!");
+        showPage('login');
+    }
 
-        let users = JSON.parse(localStorage.getItem("global_users")) || [];
+    function login() {
+        let u = users.find(x => x.phone == loginPhone.value && x.pass == loginPass.value);
+        if (u) {
+            localStorage.setItem("currentUser", u.phone);
+            loadDashboard();
+        } else alert("Access Denied");
+    }
 
-        function handleAuth() {
-            let user = {
-                name: regName.value, phone: regPhone.value, pass: regPass.value,
-                country: regCountry.value, bal: 0, prof: 0
-            };
-            users.push(user);
-            localStorage.setItem("global_users", JSON.stringify(users));
-            localStorage.setItem("session_phone", user.phone);
-            location.reload();
-        }
+    function loadDashboard() {
+        showPage('dashboard');
+        let phone = localStorage.getItem("currentUser");
+        let u = users.find(x => x.phone == phone);
+        document.getElementById("userName").innerText = "Welcome, " + u.name;
+        document.getElementById("investment").innerText = "KES " + u.investment;
+        document.getElementById("profit").innerText = "KES " + u.profit;
+        document.getElementById("status").innerText = u.status;
+        document.getElementById("status").className = u.status == "Active" ? "status-active" : "status-inactive";
+        document.getElementById("progressBar").style.width = u.progress + "%";
+    }
 
-        function updateUI() {
-            let phone = localStorage.getItem("session_phone");
-            let u = users.find(x => x.phone == phone);
-            if(!u) return;
+    // REAL-TIME PROFIT TICKER
+    setInterval(() => {
+        let phone = localStorage.getItem("currentUser");
+        if (!phone) return;
+        users = users.map(u => {
+            if (u.phone === phone && u.status === "Active") {
+                u.profit = parseFloat((u.profit + (u.investment * 0.00001)).toFixed(4));
+                document.getElementById("profit").innerText = "KES " + u.profit;
+            }
+            return u;
+        });
+        saveData();
+    }, 3000);
 
-            document.getElementById('auth-screen').classList.add('hidden');
-            document.getElementById('sideNav').classList.remove('hidden');
-            document.getElementById('mainApp').classList.remove('hidden');
+    function adminLogin() {
+        if (adminPass.value == ADMIN_PASSWORD) {
+            showPage('adminPanel');
+            renderUsers();
+        } else alert("Invalid Admin Key");
+    }
 
-            let c = currencyMap[u.country];
-            document.getElementById('welcomeText').innerText = `Welcome, ${u.name}`;
-            document.getElementById('uBal').innerText = `${c.symbol} ${u.bal.toLocaleString()}`;
-            document.getElementById('uProf').innerText = `+ ${c.symbol} ${u.prof.toLocaleString()}`;
-            document.getElementById('uCurr').innerText = `${c.code} (${u.country})`;
+    function saveUser() {
+        let u = users.find(x => x.phone == aPhone.value);
+        if (u) {
+            u.investment = Number(aInvestment.value);
+            u.profit = Number(aProfit.value);
+            u.progress = Number(aProgress.value);
+            u.status = aStatus.value;
+            saveData();
+            renderUsers();
+            alert("Updated");
+        } else alert("User not found");
+    }
 
-            if(u.country !== "Kenya") document.getElementById('mpesaSection').classList.add('hidden');
-            
-            renderPlans(c);
-        }
+    function renderUsers() {
+        let list = "<ul>";
+        users.forEach(u => {
+            list += `<li>${u.name} | ${u.phone} | Bal: ${u.investment} | Status: ${u.status}</li>`;
+        });
+        document.getElementById("userList").innerHTML = list + "</ul>";
+    }
 
-        function renderPlans(c) {
-            const basePlans = [
-                { name: "Starter", priceKES: 1500, roi: "5%" },
-                { name: "Premium", priceKES: 5000, roi: "8%" },
-                { name: "Gold Elite", priceKES: 15000, roi: "12%" }
-            ];
+    function loadChart() {
+        new TradingView.widget({
+            "width": "100%", "height": 400, "symbol": "FX:EURUSD",
+            "interval": "D", "timezone": "Etc/UTC", "theme": "dark",
+            "style": "1", "locale": "en", "container_id": "tradingview_chart"
+        });
+    }
 
-            let html = '';
-            basePlans.forEach(p => {
-                let localPrice = Math.round(p.priceKES * c.rate);
-                html += `
-                    <div class="card plan-card">
-                        <h3>${p.name}</h3>
-                        <div class="plan-price">${c.symbol} ${localPrice.toLocaleString()}</div>
-                        <p>Daily ROI: ${p.roi}</p>
-                        <button class="btn-pro" onclick="activate('${p.name}', ${localPrice})">Activate</button>
-                    </div>`;
-            });
-            document.getElementById('plansGrid').innerHTML = html;
-        }
+    function copyWallet() {
+        navigator.clipboard.writeText("TPfoEwLhjW3pBokNSem1oTVEp26mNSvfPR");
+        alert("Address Copied!");
+    }
 
-        function activate(name, price) {
-            let phone = localStorage.getItem("session_phone");
-            let u = users.find(x => x.phone == phone);
-            if(u.bal < price) return alert("Insufficient funds in your local currency.");
-            u.bal -= price;
-            localStorage.setItem("global_users", JSON.stringify(users));
-            alert(name + " Activated!");
-            updateUI();
-        }
+    function logout() { localStorage.removeItem("currentUser"); showPage('home'); }
+</script>
 
-        function deposit(type) {
-            let amt = parseInt(depAmt.value);
-            if(!amt || amt < 10) return alert("Enter valid amount");
-            alert("Processing Payment...");
-            setTimeout(() => {
-                let phone = localStorage.getItem("session_phone");
-                let u = users.find(x => x.phone == phone);
-                u.bal += amt;
-                localStorage.setItem("global_users", JSON.stringify(users));
-                updateUI();
-                showPage('dash');
-            }, 2000);
-        }
-
-        function showPage(id) {
-            document.querySelectorAll('main > div').forEach(d => d.classList.add('hidden'));
-            document.getElementById('page-' + id).classList.remove('hidden');
-            if(id === 'dash') loadChart();
-        }
-
-        function loadChart() {
-            new TradingView.widget({ "autosize": true, "symbol": "FX:EURUSD", "theme": "dark", "container_id": "tv_chart" });
-        }
-
-        function logout() { localStorage.removeItem("session_phone"); location.reload(); }
-        window.onload = () => { if(localStorage.getItem("session_phone")) updateUI(); };
-    </script>
 </body>
 </html>
 
