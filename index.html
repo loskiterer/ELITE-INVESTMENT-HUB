@@ -292,4 +292,195 @@ counters.forEach(counter => {
   updateCount();
 });
 </script>
+<section class="section" style="padding:60px; text-align:center;">
+<h2>Global Access</h2>
 
+<p id="locationMessage" style="font-size:18px; margin-top:20px; color:#94a3b8;">
+Detecting your location...
+</p>
+
+</section>
+<script>
+fetch("https://ipapi.co/json/")
+.then(response => response.json())
+.then(data => {
+    const country = data.country_name;
+    const countryCode = data.country_code;
+
+    document.getElementById("locationMessage").innerHTML =
+    `Welcome, visitor from <strong>${country}</strong> 🇺🇳<br>
+    Elite Investment Hub is accessible in your region.`;
+})
+.catch(error => {
+    document.getElementById("locationMessage").innerText =
+    "Welcome to Elite Investment Hub. Global access enabled.";
+});
+</script>
+<div class="logo">
+<div class="logo-box">E</div>
+<span>ELITE INVESTMENT HUB</span>
+</div>
+<section class="section" id="bots">
+<h2>Automated Trading Bots</h2>
+<p style="color:#94a3b8; margin-bottom:30px;">
+Explore our automated trading bot solutions designed for disciplined strategy execution.
+</p>
+
+<div class="market-grid">
+
+<div class="market-card">
+<h3>Forex Scalper Bot</h3>
+<p>Strategy: Short-term intraday trades</p>
+<p>Pairs: EUR/USD, GBP/USD</p>
+<p style="margin-top:10px; font-weight:600;">Price: $250</p>
+
+<a href="https://wa.me/254785449376?text=Hello%20Elite%20Investment%20Hub,%20I%20am%20interested%20in%20the%20Forex%20Scalper%20Bot." 
+target="_blank" class="btn" style="margin-top:15px;">
+Get Access
+</a>
+</div>
+
+<div class="market-card">
+<h3>Gold Trend Bot</h3>
+<p>Strategy: Trend-following system</p>
+<p>Market: XAU/USD</p>
+<p style="margin-top:10px; font-weight:600;">Price: $350</p>
+
+<a href="https://wa.me/254785449376?text=Hello%20Elite%20Investment%20Hub,%20I%20am%20interested%20in%20the%20Gold%20Trend%20Bot." 
+target="_blank" class="btn" style="margin-top:15px;">
+Get Access
+</a>
+</div>
+
+<div class="market-card">
+<h3>Multi-Market AI Bot</h3>
+<p>Strategy: Multi-asset algorithm</p>
+<p>Markets: Forex, Gold, Indices</p>
+<p style="margin-top:10px; font-weight:600;">Price: $500</p>
+
+<a href="https://wa.me/254785449376?text=Hello%20Elite%20Investment%20Hub,%20I%20am%20interested%20in%20the%20Multi-Market%20AI%20Bot." 
+target="_blank" class="btn" style="margin-top:15px;">
+Get Access
+</a>
+</div>
+
+</div>
+</section>
+
+<a href="#bots">Trading Bots</a>
+<section id="bots" style="display:flex; min-height:100vh;">
+
+<!-- SIDEBAR -->
+<div style="width:240px; background:#0e1424; padding:25px; border-right:1px solid #1f2937;">
+
+<h3 style="margin-bottom:30px;">Trading Hub</h3>
+
+<p style="margin-bottom:15px; color:#94a3b8;">Dashboard</p>
+<p style="margin-bottom:15px; color:#22c55e;">Trading Bots</p>
+<p style="margin-bottom:15px; color:#94a3b8;">Markets</p>
+<p style="margin-bottom:15px; color:#94a3b8;">Signals</p>
+<p style="margin-bottom:15px; color:#94a3b8;">Transactions</p>
+
+</div>
+
+<!-- MAIN CONTENT -->
+<div style="flex:1; padding:40px; background:#0b0f1a;">
+
+<h2 style="margin-bottom:10px;">Automated Trading Bots</h2>
+<p style="color:#94a3b8; margin-bottom:30px;">
+Select a bot that matches your trading strategy.
+</p>
+
+<div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:25px;">
+
+<!-- BOT 1 -->
+<div style="background:#111827; padding:25px; border-radius:12px; border:1px solid #1f2937;">
+<span style="background:#22c55e; padding:4px 10px; border-radius:20px; font-size:12px;">LIVE</span>
+<h3 style="margin-top:15px;">Forex Scalper Bot</h3>
+<p style="color:#94a3b8; margin:10px 0;">Short-term intraday strategy focused on major pairs.</p>
+
+<ul style="margin-top:10px; color:#cbd5e1; font-size:14px;">
+<li>• EUR/USD</li>
+<li>• GBP/USD</li>
+<li>• Risk Control System</li>
+</ul>
+
+<p style="margin-top:15px; font-weight:600;">Price: $250</p>
+
+<a href="https://wa.me/254785449376?text=Hello%20Elite%20Investment%20Hub,%20I%20want%20to%20purchase%20the%20Forex%20Scalper%20Bot." 
+target="_blank"
+style="display:inline-block; margin-top:15px; padding:10px 20px; background:#22c55e; border-radius:6px; text-decoration:none; color:white;">
+Get Access
+</a>
+</div>
+
+<!-- BOT 2 -->
+<div style="background:#111827; padding:25px; border-radius:12px; border:1px solid #1f2937;">
+<span style="background:#f59e0b; padding:4px 10px; border-radius:20px; font-size:12px;">POPULAR</span>
+<h3 style="margin-top:15px;">Gold Trend Bot</h3>
+<p style="color:#94a3b8; margin:10px 0;">Trend-following system optimized for XAU/USD.</p>
+
+<ul style="margin-top:10px; color:#cbd5e1; font-size:14px;">
+<li>• XAU/USD</li>
+<li>• Trend Confirmation Logic</li>
+<li>• Adaptive Stop Loss</li>
+</ul>
+
+<p style="margin-top:15px; font-weight:600;">Price: $350</p>
+
+<a href="https://wa.me/254785449376?text=Hello%20Elite%20Investment%20Hub,%20I%20want%20to%20purchase%20the%20Gold%20Trend%20Bot." 
+target="_blank"
+style="display:inline-block; margin-top:15px; padding:10px 20px; background:#22c55e; border-radius:6px; text-decoration:none; color:white;">
+Get Access
+</a>
+</div>
+
+<!-- BOT 3 -->
+<div style="background:#111827; padding:25px; border-radius:12px; border:1px solid #1f2937;">
+<span style="background:#3b82f6; padding:4px 10px; border-radius:20px; font-size:12px;">NEW</span>
+<h3 style="margin-top:15px;">Multi-Market AI Bot</h3>
+<p style="color:#94a3b8; margin:10px 0;">Multi-asset algorithm covering forex, gold & indices.</p>
+
+<ul style="margin-top:10px; color:#cbd5e1; font-size:14px;">
+<li>• Forex Pairs</li>
+<li>• Gold</li>
+<li>• Indices</li>
+</ul>
+
+<p style="margin-top:15px; font-weight:600;">Price: $500</p>
+
+<a href="https://wa.me/254785449376?text=Hello%20Elite%20Investment%20Hub,%20I%20want%20to%20purchase%20the%20Multi-Market%20AI%20Bot." 
+target="_blank"
+style="display:inline-block; margin-top:15px; padding:10px 20px; background:#22c55e; border-radius:6px; text-decoration:none; color:white;">
+Get Access
+</a>
+</div>
+
+</div>
+</div>
+
+</section>
+<div id="toast" style="
+position:fixed;
+bottom:20px;
+right:20px;
+background:#111827;
+color:white;
+padding:15px 20px;
+border-radius:8px;
+border-left:4px solid #22c55e;
+display:none;
+box-shadow:0 0 15px rgba(0,0,0,0.4);
+z-index:1000;
+">
+<span id="toastMessage"></span>
+</div>
+<button onclick="showToast('Deposit request submitted successfully.')"
+style="padding:10px 20px; background:#22c55e; border:none; border-radius:6px; color:white;">
+  
+Submit Deposit
+</button>
+<button onclick="showToast('Withdrawal request received. Processing...')"
+style="padding:10px 20px; background:#22c55e; border:none; border-radius:6px; color:white;">
+Request Withdrawal
+</button>
